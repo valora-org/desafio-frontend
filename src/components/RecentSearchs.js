@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react'
-import MainLayout from '../layouts/MainLayout'
+import React from 'react'
 import {
   Box,
   Heading,
@@ -38,12 +37,12 @@ export default function PriceChart() {
                 </Text>
               </Td>
               <Td>
-                <Text fontSize={['13px', '13px', '17px']} fontWeight="bold" color="gray.600">R$227.27</Text>
-                <Text color="gray.400">Abertura</Text>
+                <TdTitle>R$227.27</TdTitle>
+                <TdText>Abertura</TdText>
               </Td>
               <Td>
-                <Text fontSize={['13px', '13px', '17px']} fontWeight="bold" color="gray.600">R$227.27</Text>
-                <Text color="gray.400">Fechamento</Text>
+                <TdTitle>R$227.27</TdTitle>
+                <TdText>Fechamento</TdText>
               </Td>
               <Td textAlign="right" whiteSpace="nowrap">
                 <Button borderRadius="0" mr="2" w="100px">Adicionar</Button>
@@ -54,5 +53,17 @@ export default function PriceChart() {
         </Table>
       </Box>
     </Box>
+  )
+}
+
+function TdTitle(props) {
+  return (
+    <Text fontSize={['13px', '13px', '17px']} fontWeight="bold" color="gray.600">{props.children}</Text>
+  )
+}
+
+function TdText(props) {
+  return (
+    <Text color="gray.400">{props.children}</Text>
   )
 }

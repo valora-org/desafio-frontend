@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import MainLayout from '../layouts/MainLayout'
 import {
   Box,
   Heading,
@@ -14,7 +13,8 @@ import {
 } from '@chakra-ui/react'
 import { IoAdd } from 'react-icons/io5'
 
-export default function PriceChart() {
+export default function MyWallet() {
+
   return (
     <Box>
       <Flex alignItems="center" justifyContent="space-between" mb="2">
@@ -37,16 +37,17 @@ export default function PriceChart() {
                 </Text>
               </Td>
               <Td textAlign="center">
-                <Text fontSize={['13px', '13px', '17px']} fontWeight="bold" color="gray.600" textTransform="uppercase">Ações</Text>
-                <Text color="gray.400">12</Text>
+                <TdTitle>Ações</TdTitle>
+                <TdText>12</TdText>
+                <Text color="gray.400"></Text>
               </Td>
               <Td textAlign="center">
-                <Text fontSize={['13px', '13px', '17px']} fontWeight="bold" color="gray.600" textTransform="uppercase">Preço</Text>
-                <Text color="gray.400">R$12.00</Text>
+                <TdTitle>Preço</TdTitle>
+                <TdText>R$12.00</TdText>
               </Td>
               <Td textAlign="center">
-                <Text fontSize={['13px', '13px', '17px']} fontWeight="bold" color="gray.600" textTransform="uppercase">Data</Text>
-                <Text color="gray.400">01/09/2020</Text>
+                <TdTitle>Data</TdTitle>
+                <TdText>01/09/2020</TdText>
               </Td>
               <Td textAlign="right" whiteSpace="nowrap">
                 <Button borderRadius="0" mr="2" w="100px">Compra</Button>
@@ -57,5 +58,17 @@ export default function PriceChart() {
         </Table>
       </Box>
     </Box>
+  )
+}
+
+function TdTitle(props) {
+  return (
+    <Text fontSize={['13px', '13px', '17px']} fontWeight="bold" color="gray.600" textTransform="uppercase">{props.children}</Text>
+  )
+}
+
+function TdText(props) {
+  return (
+    <Text color="gray.400">{props.children}</Text>
   )
 }

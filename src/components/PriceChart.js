@@ -5,6 +5,7 @@ import { BiSearchAlt2 } from 'react-icons/bi'
 import { IoAdd } from 'react-icons/io5'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
+import api from '../services/api'
 
 const options = {
   title: {
@@ -16,6 +17,26 @@ const options = {
 }
 
 export default function PriceChart() {
+  const [searchTerm, setSearchTerm] = useState()
+  const [visualizationType, setVisualizationType] = useState('day')
+  const [stocks, setStocks] = useState([])
+
+  function getStockData(value) {
+    return api.get(`/api/v3/historical-price-full/${value}`);
+  }
+
+  async function setChartData(value) {
+    let result = await getStockData(value)
+    console.log(result)
+    setStocks([result])
+  }
+
+  async function appendChartData() {
+    let result = await getStockData(searchTerm)
+    console.log(result)
+    setStocks([...stocks, result])
+  }
+
   return (
     <Box border="1px" borderColor="gray.200">
       <Box borderBottom="1px" borderBottomColor="gray.200">
@@ -42,6 +63,13 @@ export default function PriceChart() {
                 borderWidth="1px"
                 pr="40px"
                 w={['100%', '250px', '300px']}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyPress={e => {
+                  if (e.key === 'Enter') {
+                    setChartData(e.target.value)
+                  }
+                }}
               />
               <IconButton
                 icon={<BiSearchAlt2 size="20px" color="#4A5568" />}
@@ -51,6 +79,7 @@ export default function PriceChart() {
                 right="0"
                 top="0"
                 bottom="0"
+                onClick={() => setChartData(searchTerm)}
               />
             </Stack>
             <IconButton
@@ -60,13 +89,14 @@ export default function PriceChart() {
               _hover={{
                 bg: "gray.300"
               }}
+              onClick={appendChartData}
             />
           </Stack>
 
           <Stack direction="row">
-            <Button borderRadius="0" bg="gray.200" _hover={{ bg: "gray.300" }}>D</Button>
-            <Button borderRadius="0" bg="gray.200" _hover={{ bg: "gray.300" }}>S</Button>
-            <Button borderRadius="0" bg="gray.200" _hover={{ bg: "gray.300" }}>M</Button>
+            <Button borderRadius="0" bg={visualizationType == 'day' ? 'gray.400' : 'gray.200'} _hover={{ bg: "gray.300" }} onClick={() => setVisualizationType('day')}>D</Button>
+            <Button borderRadius="0" bg={visualizationType == 'week' ? 'gray.400' : 'gray.200'} _hover={{ bg: "gray.300" }} onClick={() => setVisualizationType('week')}>S</Button>
+            <Button borderRadius="0" bg={visualizationType == 'month' ? 'gray.400' : 'gray.200'} _hover={{ bg: "gray.300" }} onClick={() => setVisualizationType('month')}>M</Button>
           </Stack>
         </Flex>
       </Box>
