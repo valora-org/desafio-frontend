@@ -10,6 +10,7 @@ import { FaRegCalendar, FaUserFriends } from 'react-icons/fa'
 import { IoSettingsSharp } from 'react-icons/io5'
 import { Scrollbars } from 'react-custom-scrollbars';
 import useLayout from '../hooks/use-layout'
+import NavbarItem from './NavbarItem'
 
 export default function Navbar() {
 
@@ -45,123 +46,15 @@ export default function Navbar() {
           autoHideTimeout={1000}
           autoHideDuration={500}
         >
-          <IconButton
-            icon={<BiSearchAlt2 size="30px" color="#4A5568" />}
-            borderRadius="0"
-            w="100%"
-            h="80px"
-            bg="transparent"
-            _hover={{
-              bg: "gray.200"
-            }}
-            _focus={{
-              outline: "none"
-            }}
-          />
-          <IconButton
-            icon={<ImHome3 size="30px" color="#4A5568" />}
-            borderRadius="0"
-            w="100%"
-            h="80px"
-            bg="transparent"
-            _hover={{
-              bg: "gray.200"
-            }}
-            _focus={{
-              outline: "none"
-            }}
-          />
-          <IconButton
-            icon={<RiFileChartFill size="30px" color="#4A5568" />}
-            borderRadius="0"
-            w="100%"
-            h="80px"
-            bg="transparent"
-            _hover={{
-              bg: "gray.200"
-            }}
-            _focus={{
-              outline: "none"
-            }}
-          />
-          <IconButton
-            icon={<AiOutlineAreaChart size="30px" color="#4A5568" />}
-            borderRadius="0"
-            w="100%"
-            h="80px"
-            bg="transparent"
-            _hover={{
-              bg: "gray.200"
-            }}
-            _focus={{
-              outline: "none"
-            }}
-          />
-          <IconButton
-            icon={<RiFolderUploadFill size="30px" color="#4A5568" />}
-            borderRadius="0"
-            w="100%"
-            h="80px"
-            bg="transparent"
-            _hover={{
-              bg: "gray.200"
-            }}
-            _focus={{
-              outline: "none"
-            }}
-          />
-          <IconButton
-            icon={<FaFileImage size="30px" color="#4A5568" />}
-            borderRadius="0"
-            w="100%"
-            h="80px"
-            bg="transparent"
-            _hover={{
-              bg: "gray.200"
-            }}
-            _focus={{
-              outline: "none"
-            }}
-          />
-          <IconButton
-            icon={<FaRegCalendar size="30px" color="#4A5568" />}
-            borderRadius="0"
-            w="100%"
-            h="80px"
-            bg="transparent"
-            _hover={{
-              bg: "gray.200"
-            }}
-            _focus={{
-              outline: "none"
-            }}
-          />
-          <IconButton
-            icon={<FaUserFriends size="30px" color="#4A5568" />}
-            borderRadius="0"
-            w="100%"
-            h="80px"
-            bg="transparent"
-            _hover={{
-              bg: "gray.200"
-            }}
-            _focus={{
-              outline: "none"
-            }}
-          />
-          <IconButton
-            icon={<IoSettingsSharp size="30px" color="#4A5568" />}
-            borderRadius="0"
-            w="100%"
-            h="80px"
-            bg="transparent"
-            _hover={{
-              bg: "gray.200"
-            }}
-            _focus={{
-              outline: "none"
-            }}
-          />
+          <NavbarItem icon={<BiSearchAlt2 size="30px" color="#4A5568" />} />
+          <NavbarItem icon={<ImHome3 size="30px" color="#4A5568" />} />
+          <NavbarItem icon={<RiFileChartFill size="30px" color="#4A5568" />} />
+          <NavbarItem icon={<AiOutlineAreaChart size="30px" color="#4A5568" />} />
+          <NavbarItem icon={<RiFolderUploadFill size="30px" color="#4A5568" />} />
+          <NavbarItem icon={<FaFileImage size="30px" color="#4A5568" />} />
+          <NavbarItem icon={<FaRegCalendar size="30px" color="#4A5568" />} />
+          <NavbarItem icon={<FaUserFriends size="30px" color="#4A5568" />} />
+          <NavbarItem icon={<IoSettingsSharp size="30px" color="#4A5568" />} />
         </Scrollbars>
       </Flex>
     </Box>
