@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
     sales: [],
-    buys: []
+    buys: [],
+    searchs: []
 };
 
 export default function wallet(state = INITIAL_STATE, action) {
@@ -11,7 +12,8 @@ export default function wallet(state = INITIAL_STATE, action) {
                 buys: [...state.buys, {
                     code: action.payload.code,
                     qtd: action.payload.qtd,
-                    value: action.payload.value
+                    value: action.payload.value,
+                    data: new Date()
                 }]
             }
         }
@@ -19,6 +21,17 @@ export default function wallet(state = INITIAL_STATE, action) {
             return {
                 ...state,
                 sales: [...state.sales, {
+                    code: action.payload.code,
+                    qtd: action.payload.qtd,
+                    value: action.payload.value,
+                    data: new Date()
+                }]
+            }
+        }
+        case '@wallet/SEARCH': {
+            return {
+                ...state,
+                searchs: [...state.searchs, {
                     code: action.payload.code,
                     qtd: action.payload.qtd,
                     value: action.payload.value
