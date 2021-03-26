@@ -19,17 +19,29 @@ export default function PriceChart() {
   return (
     <Box border="1px" borderColor="gray.200">
       <Box borderBottom="1px" borderBottomColor="gray.200">
-        <Flex p="10px" alignItems="center" justifyContent="space-between">
-          <Heading textTransform="uppercase" size="md" color="gray.600">Gráfico de Preços</Heading>
+        <Flex
+          p="10px"
+          flexDir={['column', 'row', 'row']}
+          alignItems={['flex-start', 'flex-start', 'center']}
+          justifyContent={['flex-start', 'flex-start', 'space-between']}
+        >
+          <Heading
+            textTransform="uppercase"
+            size="md"
+            color="gray.600"
+            mb={[2, 2, 0]}
+          >
+            Gráfico de Preços
+          </Heading>
 
-          <Stack direction="row">
+          <Stack direction="row" mb={[2, 2, 0]}>
             <Stack direction="row" position="relative">
               <Input
                 type="text"
                 borderRadius="0"
                 borderWidth="1px"
                 pr="40px"
-                w="400px"
+                w={['100%', '250px', '300px']}
               />
               <IconButton
                 icon={<BiSearchAlt2 size="20px" color="#4A5568" />}
@@ -59,7 +71,7 @@ export default function PriceChart() {
         </Flex>
       </Box>
       <Box>
-        <Box pt="5" overflowX="hidden" w="98%">
+        <Box pt="5" w="98%">
           <HighchartsReact
             highcharts={Highcharts}
             options={options}

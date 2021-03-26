@@ -27,24 +27,25 @@ export default function PriceChart() {
           }}
         />
       </Flex>
-      <Box border="1px" borderColor="gray.200">
+
+      <Box border="1px" borderColor="gray.200" overflowX="auto">
         <Table variant="simple">
           <Tbody>
             <Tr>
-              <Td>
-                <Text fontSize="20px" fontWeight="bold" color="gray.600">
+              <Td whiteSpace="nowrap">
+                <Text fontSize={['16px', '16px', '20px']} fontWeight="bold" color="gray.600">
                   Apple Inc. (AAPL)
                 </Text>
               </Td>
               <Td>
-                <Text fontSize="17px" fontWeight="bold" color="gray.600">R$227.27</Text>
+                <Text fontSize={['13px', '13px', '17px']} fontWeight="bold" color="gray.600">R$227.27</Text>
                 <Text color="gray.400">Abertura</Text>
               </Td>
               <Td>
-                <Text fontSize="17px" fontWeight="bold" color="gray.600">R$227.27</Text>
+                <Text fontSize={['13px', '13px', '17px']} fontWeight="bold" color="gray.600">R$227.27</Text>
                 <Text color="gray.400">Fechamento</Text>
               </Td>
-              <Td textAlign="right">
+              <Td textAlign="right" whiteSpace="nowrap">
                 <Button borderRadius="0" mr="2" w="100px">Adicionar</Button>
                 <Button colorScheme="red" borderRadius="0" w="100px">Remover</Button>
               </Td>

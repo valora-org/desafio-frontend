@@ -27,28 +27,28 @@ export default function PriceChart() {
           }}
         />
       </Flex>
-      <Box border="1px" borderColor="gray.200">
+      <Box border="1px" borderColor="gray.200" overflowX="auto">
         <Table variant="simple">
           <Tbody>
             <Tr>
               <Td>
-                <Text fontSize="20px" fontWeight="bold" color="gray.600">
+                <Text fontSize={['16px', '16px', '20px']} fontWeight="bold" color="gray.600">
                   AAPL
                 </Text>
               </Td>
               <Td textAlign="center">
-                <Text fontSize="17px" fontWeight="bold" color="gray.600" textTransform="uppercase">Ações</Text>
+                <Text fontSize={['13px', '13px', '17px']} fontWeight="bold" color="gray.600" textTransform="uppercase">Ações</Text>
                 <Text color="gray.400">12</Text>
               </Td>
               <Td textAlign="center">
-                <Text fontSize="17px" fontWeight="bold" color="gray.600" textTransform="uppercase">Preço</Text>
+                <Text fontSize={['13px', '13px', '17px']} fontWeight="bold" color="gray.600" textTransform="uppercase">Preço</Text>
                 <Text color="gray.400">R$12.00</Text>
               </Td>
               <Td textAlign="center">
-                <Text fontSize="17px" fontWeight="bold" color="gray.600" textTransform="uppercase">Data</Text>
+                <Text fontSize={['13px', '13px', '17px']} fontWeight="bold" color="gray.600" textTransform="uppercase">Data</Text>
                 <Text color="gray.400">01/09/2020</Text>
               </Td>
-              <Td textAlign="right">
+              <Td textAlign="right" whiteSpace="nowrap">
                 <Button borderRadius="0" mr="2" w="100px">Compra</Button>
                 <Button colorScheme="blue" borderRadius="0" w="100px">Venda</Button>
               </Td>

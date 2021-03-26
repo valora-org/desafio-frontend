@@ -1,20 +1,62 @@
 import React from 'react'
-import { Box, Grid } from '@chakra-ui/react'
+import { Box, Grid, Text, Flex } from '@chakra-ui/react'
 
 import Navbar from '../components/Navbar'
 import Topbar from '../components/Topbar'
 
-export default function Layout(props) {
-  return (
-    <Grid templateColumns="80px auto" h="100vh" pos="relative">
-      <Navbar />
-      <Box>
-        <Topbar />
+import useLayout from '../hooks/use-layout'
 
-        <Box p="25px">
-          {props.children}
-        </Box>
+import { AnimateSharedLayout, motion } from 'framer-motion'
+
+export default function Layout(props) {
+
+  const { isMobile, menuIsOpen } = useLayout()
+
+  const navbarVariants = {
+    normal: { width: isMobile ? 60 : 80 },
+    expand: { width: isMobile ? 100 : 200 },
+  }
+
+  const bodyVariants = {
+    normal: { width: isMobile ? 'calc(100vw - 60px)' : 'calc(100vw - 80px)' },
+    expand: { width: isMobile ? 'calc(100vw - 60px)' : 'calc(100vw - 200px)' },
+  }
+
+  return (
+    <Box>
+      <Box
+        d="flex"
+        pos="relative"
+      >
+        <motion.div
+          variants={navbarVariants}
+          animate={menuIsOpen ? 'expand' : 'normal'}
+          transition={{ type: 'linear' }}
+          style={{
+            display: 'inline-block',
+            zIndex: "50",
+            backgroundColor: '#EDF2F7'
+          }}
+        >
+          <Navbar />
+        </motion.div>
+        <motion.div
+          variants={bodyVariants}
+          animate={menuIsOpen ? 'expand' : 'normal'}
+          transition={{ type: 'linear' }}
+          style={{
+            width: isMobile ? 'calc(100vw - 60px)' : 'calc(100vw - 80px)'
+          }}
+        >
+          <Box>
+            <Topbar />
+
+            <Box p={['10px', '10px', '25px']}>
+              {props.children}
+            </Box>
+          </Box>
+        </motion.div>
       </Box>
-    </Grid>
+    </Box>
   )
 }
