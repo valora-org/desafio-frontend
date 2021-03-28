@@ -37,15 +37,25 @@ export default function PriceChart() {
   }, [wallet])
 
   function getDates() {
-    if (period == 'day')
-      return { from: month().firstDay, to: month().lastDay }
     if (period == 'week')
       return { from: week().firstDay, to: week().lastDay }
     return { from: month().firstDay, to: month().lastDay }
-
   }
 
-  function getStockData(ticker) {
+  async function getStockData(ticker) {
+    if (period == 'day') {
+      let result = await api.get(`/historical-chart/1hour/${ticker}`, {
+        params: {
+          serietype: 'line'
+        }
+      });
+
+      result.data.historical = result.data.filter(item => (new Date() - new Date(item.date.replace(/-/g, '\/'))) <= 172800000)
+      result.data.symbol = ticker
+
+      return result
+    }
+
     let dates = getDates()
     return api.get(`/historical-price-full/${ticker}`, {
       params: {
@@ -118,6 +128,7 @@ export default function PriceChart() {
     if (stocks.length) {
       let dates = []
       let series = []
+      console.log(stocks)
       stocks[0].historical.reverse().map(day => {
         dates.push(day.date)
       })
@@ -151,6 +162,7 @@ export default function PriceChart() {
       let result = await getStockData(newStocks[i].symbol)
       newStocks[i] = result.data
     }
+    console.log(newStocks)
     setStocks([...newStocks])
     updatePeriodFeedback(false)
   }

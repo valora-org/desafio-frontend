@@ -14,10 +14,23 @@ import {
 import { FiChevronDown } from 'react-icons/fi'
 import { useSelector, useDispatch } from 'react-redux'
 import { removeFromHistory } from '../store/modules/wallet/actions'
+import { motion, AnimatePresence } from 'framer-motion'
 
-export default function PriceChart() {
+export default function RecentSearchs() {
   const searchs = useSelector(state => state.wallet.searchs)
   const dispatch = useDispatch()
+  const animation = {
+    in: index => ({
+      opacity: 1,
+      y: 0,
+      transition: { type: 'linear', delay: index * 0.1 },
+    }),
+    out: index => ({
+      opacity: 0,
+      y: 20,
+      transition: { type: 'linear', delay: index * 0.05 },
+    }),
+  }
   return (
     <Box>
       <Flex alignItems="center" justifyContent="space-between" mb="2">
@@ -33,31 +46,40 @@ export default function PriceChart() {
 
       <Box border="1px" borderColor="gray.200" overflowX="auto">
         <Table variant="simple">
-          <Tbody>
-            {
-              searchs.reverse().map(search => (
-                <Tr>
-                  <Td whiteSpace="nowrap">
-                    <Text fontSize={['16px', '16px', '20px']} fontWeight="bold" color="gray.600">
-                      {search.symbol}
-                    </Text>
-                  </Td>
-                  <Td>
-                    <TdTitle>R$227.27</TdTitle>
-                    <TdText>Abertura</TdText>
-                  </Td>
-                  <Td>
-                    <TdTitle>R$227.27</TdTitle>
-                    <TdText>Fechamento</TdText>
-                  </Td>
-                  <Td textAlign="right" whiteSpace="nowrap">
-                    <Button borderRadius="0" mr="2" w="100px">Adicionar</Button>
-                    <Button colorScheme="red" borderRadius="0" w="100px" onClick={() => dispatch(removeFromHistory(search.symbol))}>Remover</Button>
-                  </Td>
-                </Tr>
-              ))
-            }
-          </Tbody>
+          <AnimatePresence>
+            <motion.tbody layout>
+              {
+                searchs.reverse().map((search, index) => (
+                  <motion.tr
+                    initial="out"
+                    animate="in"
+                    exit="out"
+                    variants={animation}
+                    custom={index}
+                    key={search.symbol}
+                  >
+                    <Td whiteSpace="nowrap">
+                      <Text fontSize={['16px', '16px', '20px']} fontWeight="bold" color="gray.600" textTransform="uppercase">
+                        {search.symbol}
+                      </Text>
+                    </Td>
+                    <Td>
+                      <TdTitle>R$227.27</TdTitle>
+                      <TdText>Abertura</TdText>
+                    </Td>
+                    <Td>
+                      <TdTitle>R$227.27</TdTitle>
+                      <TdText>Fechamento</TdText>
+                    </Td>
+                    <Td textAlign="right" whiteSpace="nowrap">
+                      <Button borderRadius="0" mr="2" w="100px">Adicionar</Button>
+                      <Button colorScheme="red" borderRadius="0" w="100px" onClick={() => dispatch(removeFromHistory(search.symbol))}>Remover</Button>
+                    </Td>
+                  </motion.tr>
+                ))
+              }
+            </motion.tbody>
+          </AnimatePresence>
         </Table>
       </Box>
     </Box>

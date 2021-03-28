@@ -16,6 +16,7 @@ import {
 import { IoAdd } from 'react-icons/io5'
 import { useSelector, useDispatch } from 'react-redux'
 import { buyStock, sellStock } from '../store/modules/wallet/actions'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function MyWallet() {
   const dispatch = useDispatch()
@@ -28,7 +29,18 @@ export default function MyWallet() {
   const [newQtd, setNewQtd] = useState()
   const [newPrice, setNewPrice] = useState()
   const [newDate, setNewDate] = useState()
-
+  const animation = {
+    in: index => ({
+      opacity: 1,
+      y: 0,
+      transition: { type: 'linear', delay: index * 0.1 },
+    }),
+    out: index => ({
+      opacity: 0,
+      y: 20,
+      transition: { type: 'linear', delay: index * 0.05 },
+    }),
+  }
   useEffect(() => {
   }, [wallet])
 
@@ -58,34 +70,49 @@ export default function MyWallet() {
       </Flex>
       <Box border="1px" borderColor="gray.200" overflowX="auto">
         <Table variant="simple">
-          <Tbody>
-            <Tr>
-              <Td>
-                <Text fontSize={['16px', '16px', '20px']} fontWeight="bold" color="gray.600">
-                  AAPL
-                </Text>
-              </Td>
-              <Td textAlign="center">
-                <TdTitle>Ações</TdTitle>
-                <TdText>12</TdText>
-                <Text color="gray.400"></Text>
-              </Td>
-              <Td textAlign="center">
-                <TdTitle>Preço</TdTitle>
-                <TdText>R$12.00</TdText>
-              </Td>
-              <Td textAlign="center">
-                <TdTitle>Data</TdTitle>
-                <TdText>01/09/2020</TdText>
-              </Td>
-              <Td textAlign="right" whiteSpace="nowrap">
-                <Button borderRadius="0" mr="2" w="100px">Compra</Button>
-                <Button colorScheme="blue" borderRadius="0" w="100px">Venda</Button>
-              </Td>
-            </Tr>
+
+          <AnimatePresence>
+            <motion.tbody layout>
+              <motion.tr
+                initial="out"
+                animate="in"
+                exit="out"
+                variants={animation}
+                custom={1}
+                key={1}
+              >
+                <Td>
+                  <Text fontSize={['16px', '16px', '20px']} fontWeight="bold" color="gray.600">
+                    AAPL
+                    </Text>
+                </Td>
+                <Td textAlign="center">
+                  <TdTitle>Ações</TdTitle>
+                  <TdText>12</TdText>
+                  <Text color="gray.400"></Text>
+                </Td>
+                <Td textAlign="center">
+                  <TdTitle>Preço</TdTitle>
+                  <TdText>R$12.00</TdText>
+                </Td>
+                <Td textAlign="center">
+                  <TdTitle>Data</TdTitle>
+                  <TdText>01/09/2020</TdText>
+                </Td>
+                <Td textAlign="right" whiteSpace="nowrap">
+                  <Button borderRadius="0" mr="2" w="100px">Compra</Button>
+                  <Button colorScheme="blue" borderRadius="0" w="100px">Venda</Button>
+                </Td>
+              </motion.tr>
+            </motion.tbody>
             {
               addVisible &&
-              <Tr>
+              <motion.tr
+                initial="out"
+                animate="in"
+                exit="out"
+                variants={animation}
+              >
                 <Td>
                   <Input type="text" bg="gray.100" borderRadius="0" placeholder="Ticker" value={newTicker} onChange={e => setNewTicker(e.target.value)} />
                 </Td>
@@ -102,9 +129,9 @@ export default function MyWallet() {
                   <Button borderRadius="0" mr="2" w="100px">Compra</Button>
                   <Button colorScheme="blue" borderRadius="0" w="100px">Venda</Button>
                 </Td>
-              </Tr>
+              </motion.tr>
             }
-          </Tbody>
+          </AnimatePresence>
         </Table>
       </Box>
     </Box>

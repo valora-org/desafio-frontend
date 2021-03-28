@@ -7,19 +7,58 @@ import { IoAdd } from 'react-icons/io5'
 import PriceChart from '../components/PriceChart'
 import RecentSearchs from '../components/RecentSearchs'
 import MyWallet from '../components/MyWallet'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Dashboard() {
+  const animation = {
+    in: index => ({
+      opacity: 1,
+      y: 0,
+      transition: { type: 'linear', delay: index * 0.1 },
+    }),
+    out: index => ({
+      opacity: 0,
+      y: 20,
+      transition: { type: 'linear', delay: index * 0.05 },
+    }),
+  }
   return (
     <MainLayout>
-      <Box mb="10">
-        <PriceChart />
-      </Box>
-      <Box mb="10">
-        <RecentSearchs />
-      </Box>
-      <Box mb="10">
-        <MyWallet />
-      </Box>
+      <AnimatePresence>
+        <motion.div
+          initial="out"
+          animate="in"
+          exit="out"
+          variants={animation}
+          custom={1}
+        >
+          <Box mb="10">
+            <PriceChart />
+          </Box>
+        </motion.div>
+        <motion.div
+          initial="out"
+          animate="in"
+          exit="out"
+          variants={animation}
+          custom={2}
+        >
+          <Box mb="10">
+            <RecentSearchs />
+          </Box>
+        </motion.div>
+        <motion.div
+          initial="out"
+          animate="in"
+          exit="out"
+          variants={animation}
+          custom={3}
+        >
+          <Box mb="10">
+            <MyWallet />
+          </Box>
+        </motion.div>
+      </AnimatePresence>
     </MainLayout>
   )
 }

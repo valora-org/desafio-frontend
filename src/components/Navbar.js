@@ -46,15 +46,15 @@ export default function Navbar() {
           autoHideTimeout={1000}
           autoHideDuration={500}
         >
-          <NavbarItem icon={<BiSearchAlt2 size="30px" color="#4A5568" />} />
-          <NavbarItem icon={<ImHome3 size="30px" color="#4A5568" />} />
-          <NavbarItem icon={<RiFileChartFill size="30px" color="#4A5568" />} />
-          <NavbarItem icon={<AiOutlineAreaChart size="30px" color="#4A5568" />} />
-          <NavbarItem icon={<RiFolderUploadFill size="30px" color="#4A5568" />} />
-          <NavbarItem icon={<FaFileImage size="30px" color="#4A5568" />} />
-          <NavbarItem icon={<FaRegCalendar size="30px" color="#4A5568" />} />
-          <NavbarItem icon={<FaUserFriends size="30px" color="#4A5568" />} />
-          <NavbarItem icon={<IoSettingsSharp size="30px" color="#4A5568" />} />
+          <NavbarItem icon={<BiSearchAlt2 size="30px" color="#4A5568" />} index='1' />
+          <NavbarItem icon={<ImHome3 size="30px" color="#4A5568" index='2' />} />
+          <NavbarItem icon={<RiFileChartFill size="30px" color="#4A5568" />} index='3' />
+          <NavbarItem icon={<AiOutlineAreaChart size="30px" color="#4A5568" />} index='4' />
+          <NavbarItem icon={<RiFolderUploadFill size="30px" color="#4A5568" />} index='5' />
+          <NavbarItem icon={<FaFileImage size="30px" color="#4A5568" />} index='6' />
+          <NavbarItem icon={<FaRegCalendar size="30px" color="#4A5568" />} index='7' />
+          <NavbarItem icon={<FaUserFriends size="30px" color="#4A5568" />} index='8' />
+          <NavbarItem icon={<IoSettingsSharp size="30px" color="#4A5568" />} index='9' />
         </Scrollbars>
       </Flex>
     </Box>
