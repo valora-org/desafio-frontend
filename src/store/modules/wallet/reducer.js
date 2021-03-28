@@ -41,6 +41,12 @@ export default function wallet(state = INITIAL_STATE, action) {
                 }]
             }
         }
+        case '@wallet/REMOVEHISTORY': {
+            return {
+                ...state,
+                searchs: [...state.searchs.filter(search => search.symbol.toUpperCase() != action.payload.symbol.toUpperCase())]
+            }
+        }
         default:
             return state;
     }

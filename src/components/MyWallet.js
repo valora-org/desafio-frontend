@@ -9,23 +9,52 @@ import {
   Tbody,
   Tr,
   Td,
-  Text
+  Text,
+  Input,
+  Tooltip
 } from '@chakra-ui/react'
 import { IoAdd } from 'react-icons/io5'
+import { useSelector, useDispatch } from 'react-redux'
+import { buyStock, sellStock } from '../store/modules/wallet/actions'
 
 export default function MyWallet() {
+  const dispatch = useDispatch()
+  const wallet = useSelector(state => state.wallet)
+  const [addVisible, setAddVisible] = useState(false)
+
+  const [myStocks, setMyStocks] = useState([])
+
+  const [newTicker, setNewTicker] = useState()
+  const [newQtd, setNewQtd] = useState()
+  const [newPrice, setNewPrice] = useState()
+  const [newDate, setNewDate] = useState()
+
+  useEffect(() => {
+  }, [wallet])
+
+  function buy() {
+
+  }
+
+  function sell() {
+
+  }
 
   return (
     <Box>
       <Flex alignItems="center" justifyContent="space-between" mb="2">
         <Heading textTransform="uppercase" size="md" color="gray.600">Minha carteira</Heading>
-        <IconButton
-          icon={<IoAdd size="20" color="#4A5568" />}
-          borderRadius="0"
-          _hover={{
-            bg: "gray.300"
-          }}
-        />
+
+        <Tooltip label="Nova operação">
+          <IconButton
+            icon={<IoAdd size="20" color="#4A5568" />}
+            borderRadius="0"
+            _hover={{
+              bg: "gray.300"
+            }}
+            onClick={() => setAddVisible(true)}
+          />
+        </Tooltip>
       </Flex>
       <Box border="1px" borderColor="gray.200" overflowX="auto">
         <Table variant="simple">
@@ -54,6 +83,27 @@ export default function MyWallet() {
                 <Button colorScheme="blue" borderRadius="0" w="100px">Venda</Button>
               </Td>
             </Tr>
+            {
+              addVisible &&
+              <Tr>
+                <Td>
+                  <Input type="text" bg="gray.100" borderRadius="0" placeholder="Ticker" value={newTicker} onChange={e => setNewTicker(e.target.value)} />
+                </Td>
+                <Td textAlign="center">
+                  <Input type="text" bg="gray.100" borderRadius="0" placeholder="Quantidade" value={newQtd} onChange={e => setNewQtd(e.target.value)} />
+                </Td>
+                <Td textAlign="center">
+                  <Input type="text" bg="gray.100" borderRadius="0" placeholder="Preço" value={newPrice} onChange={e => setNewPrice(e.target.value)} />
+                </Td>
+                <Td textAlign="center">
+                  <Input type="date" bg="gray.100" borderRadius="0" placeholder="Data" value={newDate} onChange={e => setNewDate(e.target.value)} />
+                </Td>
+                <Td textAlign="right" whiteSpace="nowrap">
+                  <Button borderRadius="0" mr="2" w="100px">Compra</Button>
+                  <Button colorScheme="blue" borderRadius="0" w="100px">Venda</Button>
+                </Td>
+              </Tr>
+            }
           </Tbody>
         </Table>
       </Box>

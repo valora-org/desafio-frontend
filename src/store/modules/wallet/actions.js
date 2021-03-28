@@ -18,3 +18,10 @@ export function searchStock(symbol) {
         payload: { symbol }
     }
 }
+
+export function removeFromHistory(symbol) {
+    return {
+        type: '@wallet/REMOVEHISTORY',
+        payload: { symbol }
+    }
+}

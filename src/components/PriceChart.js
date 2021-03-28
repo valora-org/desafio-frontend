@@ -58,6 +58,14 @@ export default function PriceChart() {
 
   const [loadingSet, setLoadingSet] = useState(false)
   async function setChartData(ticker) {
+    if (!ticker)
+      return toast({
+        title: "Oops",
+        description: "Você precisa informar um ticker",
+        status: "info",
+        duration: 9000,
+        isClosable: true,
+      })
     setLoadingSet(true)
     let result = await getStockData(ticker)
     if (!result.data.historical) {
@@ -79,6 +87,14 @@ export default function PriceChart() {
 
   const [loadingAppend, setLoadingAppend] = useState(false)
   async function appendChartData() {
+    if (!searchTerm)
+      return toast({
+        title: "Oops",
+        description: "Você precisa informar um ticker",
+        status: "info",
+        duration: 9000,
+        isClosable: true,
+      })
     setLoadingAppend(true)
     let result = await getStockData(searchTerm)
     if (!result.data.historical) {
@@ -124,13 +140,32 @@ export default function PriceChart() {
     }
   }, [stocks])
 
+  const [updatingDay, setUpdatingDay] = useState(false)
+  const [updatingWeek, setUpdatingWeek] = useState(false)
+  const [updatingMonth, setUpdatingMonth] = useState(false)
+
   async function updatePeriod() {
+    updatePeriodFeedback(true)
     let newStocks = stocks
     for (let i = 0; i < newStocks.length; i++) {
       let result = await getStockData(newStocks[i].symbol)
       newStocks[i] = result.data
     }
     setStocks([...newStocks])
+    updatePeriodFeedback(false)
+  }
+
+  function updatePeriodFeedback(status) {
+    switch (period) {
+      case 'day':
+        setUpdatingDay(status)
+        break
+      case 'week':
+        setUpdatingWeek(status)
+        break
+      case 'month':
+        setUpdatingMonth(status)
+    }
   }
 
   useEffect(() => {
@@ -200,9 +235,9 @@ export default function PriceChart() {
           </Stack>
 
           <Stack direction="row">
-            <PeriodButton buttonPeriod='day' setPeriod={setPeriod} text='D' label='Dia' />
-            <PeriodButton buttonPeriod='week' setPeriod={setPeriod} text='S' label='Semana' />
-            <PeriodButton buttonPeriod='month' setPeriod={setPeriod} text='M' label='Month' />
+            <PeriodButton buttonPeriod='day' setPeriod={setPeriod} text='D' label='Dia' isLoading={updatingDay} />
+            <PeriodButton buttonPeriod='week' setPeriod={setPeriod} text='S' label='Semana' isLoading={updatingWeek} />
+            <PeriodButton buttonPeriod='month' setPeriod={setPeriod} text='M' label='Month' isLoading={updatingMonth} />
           </Stack>
         </Flex>
       </Box>
@@ -218,10 +253,10 @@ export default function PriceChart() {
   )
 }
 
-function PeriodButton({ period, setPeriod, buttonPeriod, text, label }) {
+function PeriodButton({ period, setPeriod, buttonPeriod, text, label, isLoading }) {
   return (
     <Tooltip label={label}>
-      <Button borderRadius="0" bg={period == buttonPeriod ? 'gray.400' : 'gray.200'} _hover={{ bg: "gray.300" }} onClick={() => setPeriod(buttonPeriod)}>{text}</Button>
+      <Button isLoading={isLoading} borderRadius="0" bg={period == buttonPeriod ? 'gray.400' : 'gray.200'} _hover={{ bg: "gray.300" }} onClick={() => setPeriod(buttonPeriod)}>{text}</Button>
     </Tooltip>
   )
 }
