@@ -10,7 +10,7 @@ export default function wallet(state = INITIAL_STATE, action) {
             return {
                 ...state,
                 buys: [...state.buys, {
-                    code: action.payload.code,
+                    symbol: action.payload.symbol,
                     qtd: action.payload.qtd,
                     value: action.payload.value,
                     data: new Date()
@@ -21,7 +21,7 @@ export default function wallet(state = INITIAL_STATE, action) {
             return {
                 ...state,
                 sales: [...state.sales, {
-                    code: action.payload.code,
+                    symbol: action.payload.symbol,
                     qtd: action.payload.qtd,
                     value: action.payload.value,
                     data: new Date()
@@ -29,12 +29,15 @@ export default function wallet(state = INITIAL_STATE, action) {
             }
         }
         case '@wallet/SEARCH': {
+            let searchs = state.searchs
+            if (searchs.length == 5) {
+                searchs.shift()
+            }
+            searchs = searchs.filter(search => search.symbol.toUpperCase() != action.payload.symbol.toUpperCase())
             return {
                 ...state,
-                searchs: [...state.searchs, {
-                    code: action.payload.code,
-                    qtd: action.payload.qtd,
-                    value: action.payload.value
+                searchs: [...searchs, {
+                    symbol: action.payload.symbol,
                 }]
             }
         }

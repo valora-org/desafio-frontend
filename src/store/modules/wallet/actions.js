@@ -1,13 +1,20 @@
-export function buyStock(code, qtd, value) {
+export function buyStock(symbol, qtd, value) {
     return {
         type: '@wallet/BUY',
-        payload: { code, qtd, value }
+        payload: { symbol, qtd, value }
     }
 }
 
-export function sellStock(code, qtd, value) {
+export function sellStock(symbol, qtd, value) {
     return {
         type: '@wallet/SELL',
-        payload: { code, qtd, value }
+        payload: { symbol, qtd, value }
+    }
+}
+
+export function searchStock(symbol) {
+    return {
+        type: '@wallet/SEARCH',
+        payload: { symbol }
     }
 }

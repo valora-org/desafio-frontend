@@ -12,8 +12,10 @@ import {
   Text
 } from '@chakra-ui/react'
 import { FiChevronDown } from 'react-icons/fi'
+import { useSelector } from 'react-redux'
 
 export default function PriceChart() {
+  const searchs = useSelector(state => state.wallet.searchs)
   return (
     <Box>
       <Flex alignItems="center" justifyContent="space-between" mb="2">
@@ -30,25 +32,29 @@ export default function PriceChart() {
       <Box border="1px" borderColor="gray.200" overflowX="auto">
         <Table variant="simple">
           <Tbody>
-            <Tr>
-              <Td whiteSpace="nowrap">
-                <Text fontSize={['16px', '16px', '20px']} fontWeight="bold" color="gray.600">
-                  Apple Inc. (AAPL)
-                </Text>
-              </Td>
-              <Td>
-                <TdTitle>R$227.27</TdTitle>
-                <TdText>Abertura</TdText>
-              </Td>
-              <Td>
-                <TdTitle>R$227.27</TdTitle>
-                <TdText>Fechamento</TdText>
-              </Td>
-              <Td textAlign="right" whiteSpace="nowrap">
-                <Button borderRadius="0" mr="2" w="100px">Adicionar</Button>
-                <Button colorScheme="red" borderRadius="0" w="100px">Remover</Button>
-              </Td>
-            </Tr>
+            {
+              searchs.map(search => (
+                <Tr>
+                  <Td whiteSpace="nowrap">
+                    <Text fontSize={['16px', '16px', '20px']} fontWeight="bold" color="gray.600">
+                      {search.symbol}
+                    </Text>
+                  </Td>
+                  <Td>
+                    <TdTitle>R$227.27</TdTitle>
+                    <TdText>Abertura</TdText>
+                  </Td>
+                  <Td>
+                    <TdTitle>R$227.27</TdTitle>
+                    <TdText>Fechamento</TdText>
+                  </Td>
+                  <Td textAlign="right" whiteSpace="nowrap">
+                    <Button borderRadius="0" mr="2" w="100px">Adicionar</Button>
+                    <Button colorScheme="red" borderRadius="0" w="100px">Remover</Button>
+                  </Td>
+                </Tr>
+              ))
+            }
           </Tbody>
         </Table>
       </Box>
