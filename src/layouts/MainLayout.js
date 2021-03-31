@@ -7,6 +7,7 @@ import Topbar from '../components/Topbar'
 import useLayout from '../hooks/use-layout'
 
 import { AnimateSharedLayout, motion } from 'framer-motion'
+import { Scrollbars } from 'react-custom-scrollbars';
 
 export default function Layout(props) {
 
@@ -51,9 +52,11 @@ export default function Layout(props) {
           <Box>
             <Topbar />
 
-            <Box p={['10px', '10px', '25px']}>
-              {props.children}
-            </Box>
+            <Scrollbars style={{ width: '100%', height: isMobile ? 'calc(100vh - 80px)' : 'calc(100vh - 100px)' }} >
+              <Box p={['10px', '10px', '25px']}>
+                {props.children}
+              </Box>
+            </Scrollbars>
           </Box>
         </motion.div>
       </Box>

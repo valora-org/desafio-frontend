@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Box,
   Heading,
@@ -6,8 +6,6 @@ import {
   Button,
   IconButton,
   Table,
-  Tbody,
-  Tr,
   Td,
   Text
 } from '@chakra-ui/react'
@@ -38,6 +36,30 @@ export default function RecentSearchs() {
     }),
   }
 
+  const [show, setShow] = useState(true)
+
+  const boxAnimation = {
+    in: {
+      opacity: 1,
+      y: 0,
+      transition: { type: 'linear' },
+    },
+    out: {
+      opacity: 0,
+      y: -20,
+      transition: { type: 'linear' },
+    }
+  }
+
+  const arrowAnimation = {
+    up: {
+      rotate: 0
+    },
+    down: {
+      rotate: 180
+    }
+  }
+
   function removeStock(symbol) {
     dispatch(removeFromHistory(symbol))
     dispatch(setChartStocks(chartStocks.filter(stock => stock.symbol != symbol)))
@@ -52,60 +74,72 @@ export default function RecentSearchs() {
       <Flex alignItems="center" justifyContent="space-between" mb="2">
         <Heading textTransform="uppercase" size="md" color="gray.600">Buscas recentes</Heading>
         <IconButton
-          icon={<FiChevronDown size="20" color="#4A5568" />}
+          icon={<motion.div variants={arrowAnimation} animate={show ? "up" : "down"}><FiChevronDown size="20" color="#4A5568" /></motion.div>}
           borderRadius="0"
           _hover={{
             bg: "gray.300"
           }}
+          onClick={() => setShow(!show)}
+          _focus={{
+            outline: 0
+          }}
         />
       </Flex>
 
-      <Box border="1px" borderColor="gray.200" overflowX="auto">
+      <AnimatePresence>
         {
-          searchs.length ?
-            <AnimatePresence>
-              <Table variant="simple">
-                <motion.tbody layout>
-                  {
-                    searchs.reverse().map((search, index) => (
-                      <motion.tr
-                        initial="out"
-                        animate="in"
-                        exit="out"
-                        variants={animation}
-                        custom={index}
-                        key={search.symbol}
-                      >
-                        <Td whiteSpace="nowrap">
-                          <Text fontSize={['16px', '16px', '20px']} fontWeight="bold" color="gray.600" textTransform="uppercase">
-                            {search.symbol}
-                          </Text>
-                        </Td>
-                        <Td>
-                          <TdTitle>R${search.open.toFixed(2).replace('.', ',')}</TdTitle>
-                          <TdText>Abertura</TdText>
-                        </Td>
-                        <Td>
-                          <TdTitle>R${search.close.toFixed(2).replace('.', ',')}</TdTitle>
-                          <TdText>Fechamento</TdText>
-                        </Td>
-                        <Td textAlign="right" whiteSpace="nowrap">
-                          <Button borderRadius="0" mr="2" w="100px" onClick={() => addStock(search.symbol)}>Adicionar</Button>
-                          <Button colorScheme="red" borderRadius="0" w="100px" onClick={() => removeStock(search.symbol)}>Remover</Button>
-                        </Td>
-                      </motion.tr>
-                    ))
-                  }
-                </motion.tbody>
-              </Table>
-            </AnimatePresence>
-            :
-            <Box bg="gray.100" p="25px" textAlign="center" w="100%">
-              <Text>Nenhuma busca registrada.</Text>
+          show &&
+          <motion.div variants={boxAnimation} initial="in" animate="in" exit="out">
+            <Box border="1px" borderColor="gray.200" overflow={['auto', 'auto', 'hidden']}>
+              {
+                searchs.length ?
+                  <AnimatePresence>
+                    <Table variant="simple">
+                      <motion.tbody>
+                        {
+                          searchs.map((search, index) => (
+                            <motion.tr
+                              initial="out"
+                              animate="in"
+                              exit="out"
+                              variants={animation}
+                              custom={index}
+                              key={search.symbol}
+                              layout
+                            >
+                              <Td whiteSpace="nowrap">
+                                <Text fontSize={['16px', '16px', '20px']} fontWeight="bold" color="gray.600" textTransform="uppercase">
+                                  {search.symbol}
+                                </Text>
+                              </Td>
+                              <Td>
+                                <TdTitle>${search.open.toFixed(2)}</TdTitle>
+                                <TdText>Abertura</TdText>
+                              </Td>
+                              <Td>
+                                <TdTitle>${search.close.toFixed(2)}</TdTitle>
+                                <TdText>Fechamento</TdText>
+                              </Td>
+                              <Td textAlign="right" whiteSpace="nowrap">
+                                <Button borderRadius="0" mr="2" w="100px" onClick={() => addStock(search.symbol)}>Adicionar</Button>
+                                <Button colorScheme="red" borderRadius="0" w="100px" onClick={() => removeStock(search.symbol)}>Remover</Button>
+                              </Td>
+                            </motion.tr>
+                          ))
+                        }
+                      </motion.tbody>
+                    </Table>
+                  </AnimatePresence>
+                  :
+                  <Box bg="gray.100" p="25px" textAlign="center" w="100%">
+                    <Text>Nenhuma busca registrada.</Text>
+                  </Box>
+              }
             </Box>
+          </motion.div>
         }
-      </Box>
-    </Box>
+      </AnimatePresence>
+    </Box >
   )
 }
 

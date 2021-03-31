@@ -7,7 +7,7 @@ import { IoAdd } from 'react-icons/io5'
 import PriceChart from '../components/PriceChart'
 import RecentSearchs from '../components/RecentSearchs'
 import MyWallet from '../components/MyWallet'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion'
 
 export default function Dashboard() {
   const animation = {
@@ -24,7 +24,7 @@ export default function Dashboard() {
   }
   return (
     <MainLayout>
-      <AnimatePresence>
+      <AnimateSharedLayout>
         <motion.div
           initial="out"
           animate="in"
@@ -32,7 +32,7 @@ export default function Dashboard() {
           variants={animation}
           custom={1}
         >
-          <Box mb="10">
+          <Box mb="5">
             <PriceChart />
           </Box>
         </motion.div>
@@ -43,7 +43,7 @@ export default function Dashboard() {
           variants={animation}
           custom={2}
         >
-          <Box mb="10">
+          <Box mb="5">
             <RecentSearchs />
           </Box>
         </motion.div>
@@ -53,12 +53,13 @@ export default function Dashboard() {
           exit="out"
           variants={animation}
           custom={3}
+          layout
         >
           <Box mb="10">
             <MyWallet />
           </Box>
         </motion.div>
-      </AnimatePresence>
+      </AnimateSharedLayout>
     </MainLayout>
   )
 }

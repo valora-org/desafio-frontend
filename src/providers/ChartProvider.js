@@ -1,10 +1,5 @@
 import React, { useState, useEffect, createContext } from 'react'
-import MainLayout from '../layouts/MainLayout'
-import { Box, Heading, Flex, Button, Stack, IconButton, Input, useToast, Tooltip, ProgressLabel } from '@chakra-ui/react'
-import { BiSearchAlt2 } from 'react-icons/bi'
-import { IoAdd } from 'react-icons/io5'
-import Highcharts from 'highcharts'
-import HighchartsReact from 'highcharts-react-official'
+import { useToast } from '@chakra-ui/react'
 import api from '../services/api'
 import { month, week } from '../services/dates'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,13 +8,11 @@ import { searchStock, setChartStocks, } from '../store/modules/wallet/actions'
 export const ChartContext = createContext()
 
 export default function ChartProvider({ children }) {
-  const wallet = useSelector(state => state.wallet)
   const chartStocks = useSelector(state => state.wallet.chartStocks)
   const dispatch = useDispatch()
   const toast = useToast()
   const [searchTerm, setSearchTerm] = useState()
   const [period, setPeriod] = useState('month')
-  //const [chartStocks, setStocks] = useState([])
   const [options, setOptions] = useState({
 
     title: {

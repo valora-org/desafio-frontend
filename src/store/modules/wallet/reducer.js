@@ -8,18 +8,6 @@ const INITIAL_STATE = {
 
 export default function wallet(state = INITIAL_STATE, action) {
     switch (action.type) {
-        // case '@wallet/ADDCHART': {
-        //     return {
-        //         ...state,
-        //         chartStocks: [...state.chartStocks, action.payload.data]
-        //     }
-        // }
-        // case '@wallet/REMOVECHART': {
-        //     return {
-        //         ...state,
-        //         chartStocks: [...state.chartStocks.filter(stock => stock.symbol != action.payload.symbol)]
-        //     }
-        // }
         case '@wallet/SETCHART': {
             return {
                 ...state,
@@ -27,25 +15,48 @@ export default function wallet(state = INITIAL_STATE, action) {
             }
         }
         case '@wallet/BUY': {
+            let oldStocks = state.stocks
+            if (!oldStocks.filter(stock => stock.symbol == action.payload.symbol).length) {
+                return {
+                    ...state,
+                    stocks: [...oldStocks, {
+                        symbol: action.payload.symbol,
+                        buys: [{
+                            qtd: action.payload.qtd,
+                            value: action.payload.value,
+                            date: action.payload.date,
+                        }],
+                        sales: []
+                    }]
+                }
+            }
+
+            for (let i = 0; i < oldStocks.length; i++) {
+                if (oldStocks[i].symbol == action.payload.symbol) {
+                    oldStocks[i] = {
+                        ...oldStocks[i],
+                        buys: [...oldStocks[i].buys, action.payload]
+                    }
+                }
+            }
             return {
                 ...state,
-                buys: [...state.buys, {
-                    symbol: action.payload.symbol,
-                    qtd: action.payload.qtd,
-                    value: action.payload.value,
-                    data: new Date()
-                }]
+                stocks: [...oldStocks]
             }
         }
         case '@wallet/SELL': {
+            let oldStocks = state.stocks
+            for (let i = 0; i < oldStocks.length; i++) {
+                if (oldStocks[i].symbol == action.payload.symbol) {
+                    oldStocks[i] = {
+                        ...oldStocks[i],
+                        sales: [...oldStocks[i].sales, action.payload]
+                    }
+                }
+            }
             return {
                 ...state,
-                sales: [...state.sales, {
-                    symbol: action.payload.symbol,
-                    qtd: action.payload.qtd,
-                    value: action.payload.value,
-                    data: new Date()
-                }]
+                stocks: [...oldStocks]
             }
         }
         case '@wallet/SEARCH': {

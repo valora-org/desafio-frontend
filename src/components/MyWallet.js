@@ -6,29 +6,121 @@ import {
   Button,
   IconButton,
   Table,
-  Tbody,
-  Tr,
   Td,
   Text,
   Input,
-  Tooltip
+  Tooltip,
+  useToast
 } from '@chakra-ui/react'
 import { IoAdd } from 'react-icons/io5'
+import { BiMinus } from 'react-icons/bi'
 import { useSelector, useDispatch } from 'react-redux'
-import { buyStock, sellStock } from '../store/modules/wallet/actions'
+import { buyStock } from '../store/modules/wallet/actions'
 import { motion, AnimatePresence } from 'framer-motion'
+
+import MyWalletTr from './MyWalletTr'
 
 export default function MyWallet() {
   const dispatch = useDispatch()
-  const wallet = useSelector(state => state.wallet)
+  const stocks = useSelector(state => state.wallet.stocks)
+
   const [addVisible, setAddVisible] = useState(false)
 
-  const [myStocks, setMyStocks] = useState([])
+  const [ticker, setTicker] = useState()
+  const [qtd, setQtd] = useState()
+  const [value, setValue] = useState()
+  const [date, setDate] = useState()
 
-  const [newTicker, setNewTicker] = useState()
-  const [newQtd, setNewQtd] = useState()
-  const [newPrice, setNewPrice] = useState()
-  const [newDate, setNewDate] = useState()
+  const toast = useToast()
+
+  function validate() {
+    if (!ticker) {
+      toast({
+        title: "Oops",
+        description: "Você precisa informar um ticker",
+        status: "info",
+        duration: 9000,
+        isClosable: true,
+      })
+      return false
+    }
+
+    if (!qtd) {
+      toast({
+        title: "Oops",
+        description: "Você precisa informar uma quantidade",
+        status: "info",
+        duration: 9000,
+        isClosable: true,
+      })
+      return false
+    }
+
+    if (!value) {
+      toast({
+        title: "Oops",
+        description: "Você precisa informar um preço",
+        status: "info",
+        duration: 9000,
+        isClosable: true,
+      })
+      return false
+    }
+
+    if (!date) {
+      toast({
+        title: "Oops",
+        description: "Você precisa informar uma data",
+        status: "info",
+        duration: 9000,
+        isClosable: true,
+      })
+      return false
+    }
+
+    return true
+  }
+
+  function buy() {
+    if (validate()) {
+      dispatch(buyStock(ticker, qtd, value, date))
+      toast({
+        title: "Sucesso",
+        description: "Compra registrada",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      })
+      setAddVisible(false)
+      setTicker('')
+      setQtd('')
+      setValue('')
+      setDate('')
+    }
+  }
+
+  function cancel() {
+    setAddVisible(false)
+    setTicker('')
+    setQtd('')
+    setValue('')
+    setDate('')
+  }
+
+  // function sell() {
+  //   if (validate()) {
+  //     dispatch(sellStock(ticker, qtd, value, date))
+  //     toast({
+  //       title: "Sucesso",
+  //       description: "Venda registrada",
+  //       status: "success",
+  //       duration: 9000,
+  //       isClosable: true,
+  //     })
+  //     setAddVisible(false)
+  //   }
+  // }
+
   const animation = {
     in: index => ({
       opacity: 1,
@@ -41,70 +133,79 @@ export default function MyWallet() {
       transition: { type: 'linear', delay: index * 0.05 },
     }),
   }
+
+  const [hasStocks, setHasStocks] = useState(false)
+
   useEffect(() => {
-  }, [wallet])
+    let total = 0
+    stocks.map(stock => {
+      stock.buys.map(buy => {
+        total += parseInt(buy.qtd)
+      })
+      stock.sales.map(sale => {
+        total -= parseInt(sale.qtd)
+      })
+    })
 
-  function buy() {
-
-  }
-
-  function sell() {
-
-  }
+    if (total)
+      setHasStocks(true)
+  }, [stocks])
 
   return (
     <Box>
       <Flex alignItems="center" justifyContent="space-between" mb="2">
         <Heading textTransform="uppercase" size="md" color="gray.600">Minha carteira</Heading>
 
-        <Tooltip label="Nova operação">
-          <IconButton
-            icon={<IoAdd size="20" color="#4A5568" />}
-            borderRadius="0"
-            _hover={{
-              bg: "gray.300"
-            }}
-            onClick={() => setAddVisible(true)}
-          />
-        </Tooltip>
+        {
+          addVisible ?
+            <Tooltip label="Cancelar">
+              <IconButton
+                icon={<BiMinus size="20" color="#4A5568" />}
+                borderRadius="0"
+                _hover={{
+                  bg: "gray.300"
+                }}
+                onClick={() => setAddVisible(false)}
+                _focus={{
+                  outline: 'none'
+                }}
+              />
+            </Tooltip>
+            :
+            <Tooltip label="Nova operação">
+              <IconButton
+                icon={<IoAdd size="20" color="#4A5568" />}
+                borderRadius="0"
+                _hover={{
+                  bg: "gray.300"
+                }}
+                onClick={() => setAddVisible(true)}
+                _focus={{
+                  outline: 'none'
+                }}
+              />
+            </Tooltip>
+        }
       </Flex>
-      <Box border="1px" borderColor="gray.200" overflowX="auto">
+      <Box border="1px" borderColor="gray.200" overflow={['auto', 'auto', 'hidden']}>
+        {
+          (!hasStocks && !addVisible) &&
+          <Box bg="gray.100" p="25px" textAlign="center" w="100%">
+            <Text>Nenhuma ação registrada.</Text>
+          </Box>
+        }
         <Table variant="simple">
 
           <AnimatePresence>
             <motion.tbody layout>
-              <motion.tr
-                initial="out"
-                animate="in"
-                exit="out"
-                variants={animation}
-                custom={1}
-                key={1}
-              >
-                <Td>
-                  <Text fontSize={['16px', '16px', '20px']} fontWeight="bold" color="gray.600">
-                    AAPL
-                    </Text>
-                </Td>
-                <Td textAlign="center">
-                  <TdTitle>Ações</TdTitle>
-                  <TdText>12</TdText>
-                  <Text color="gray.400"></Text>
-                </Td>
-                <Td textAlign="center">
-                  <TdTitle>Preço</TdTitle>
-                  <TdText>R$12.00</TdText>
-                </Td>
-                <Td textAlign="center">
-                  <TdTitle>Data</TdTitle>
-                  <TdText>01/09/2020</TdText>
-                </Td>
-                <Td textAlign="right" whiteSpace="nowrap">
-                  <Button borderRadius="0" mr="2" w="100px">Compra</Button>
-                  <Button colorScheme="blue" borderRadius="0" w="100px">Venda</Button>
-                </Td>
-              </motion.tr>
+              {
+                hasStocks &&
+                stocks.map(stock => (
+                  <MyWalletTr stock={stock} />
+                ))
+              }
             </motion.tbody>
+
             {
               addVisible &&
               <motion.tr
@@ -114,20 +215,21 @@ export default function MyWallet() {
                 variants={animation}
               >
                 <Td>
-                  <Input type="text" bg="gray.100" borderRadius="0" placeholder="Ticker" value={newTicker} onChange={e => setNewTicker(e.target.value)} />
+                  <Input minWidth="150px" type="text" bg="gray.100" borderRadius="0" placeholder="Ticker" value={ticker} onChange={e => setTicker(e.target.value)} />
                 </Td>
                 <Td textAlign="center">
-                  <Input type="text" bg="gray.100" borderRadius="0" placeholder="Quantidade" value={newQtd} onChange={e => setNewQtd(e.target.value)} />
+                  <Input minWidth="150px" type="text" bg="gray.100" borderRadius="0" placeholder="Quantidade" value={qtd} onChange={e => setQtd(e.target.value)} />
                 </Td>
                 <Td textAlign="center">
-                  <Input type="text" bg="gray.100" borderRadius="0" placeholder="Preço" value={newPrice} onChange={e => setNewPrice(e.target.value)} />
+                  <Input minWidth="150px" type="text" bg="gray.100" borderRadius="0" placeholder="Preço" value={value} onChange={e => setValue(e.target.value)} />
                 </Td>
                 <Td textAlign="center">
-                  <Input type="date" bg="gray.100" borderRadius="0" placeholder="Data" value={newDate} onChange={e => setNewDate(e.target.value)} />
+                  <Input minWidth="150px" type="date" bg="gray.100" borderRadius="0" placeholder="Data" value={date} onChange={e => setDate(e.target.value)} />
                 </Td>
                 <Td textAlign="right" whiteSpace="nowrap">
-                  <Button borderRadius="0" mr="2" w="100px">Compra</Button>
-                  <Button colorScheme="blue" borderRadius="0" w="100px">Venda</Button>
+                  <Button borderRadius="0" mr="2" w="100px" onClick={cancel}>Cancelar</Button>
+                  <Button colorScheme="blue" borderRadius="0" onClick={buy}>Confirmar compra</Button>
+                  {/* <Button colorScheme="blue" borderRadius="0" w="100px" onClick={sell}>Vender</Button> */}
                 </Td>
               </motion.tr>
             }
@@ -135,17 +237,5 @@ export default function MyWallet() {
         </Table>
       </Box>
     </Box>
-  )
-}
-
-function TdTitle(props) {
-  return (
-    <Text fontSize={['13px', '13px', '17px']} fontWeight="bold" color="gray.600" textTransform="uppercase">{props.children}</Text>
-  )
-}
-
-function TdText(props) {
-  return (
-    <Text color="gray.400">{props.children}</Text>
   )
 }

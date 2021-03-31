@@ -1,7 +1,4 @@
-import React, {
-  useState, useEffect, useLayoutEffect
-  , createContext
-} from 'react'
+import React, { useState, useLayoutEffect, createContext } from 'react'
 
 export const LayoutContext = createContext()
 
