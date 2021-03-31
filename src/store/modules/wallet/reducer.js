@@ -1,11 +1,31 @@
 const INITIAL_STATE = {
+    stocks: [],
     sales: [],
     buys: [],
-    searchs: []
+    searchs: [],
+    chartStocks: [],
 };
 
 export default function wallet(state = INITIAL_STATE, action) {
     switch (action.type) {
+        // case '@wallet/ADDCHART': {
+        //     return {
+        //         ...state,
+        //         chartStocks: [...state.chartStocks, action.payload.data]
+        //     }
+        // }
+        // case '@wallet/REMOVECHART': {
+        //     return {
+        //         ...state,
+        //         chartStocks: [...state.chartStocks.filter(stock => stock.symbol != action.payload.symbol)]
+        //     }
+        // }
+        case '@wallet/SETCHART': {
+            return {
+                ...state,
+                chartStocks: action.payload.data
+            }
+        }
         case '@wallet/BUY': {
             return {
                 ...state,
@@ -36,9 +56,7 @@ export default function wallet(state = INITIAL_STATE, action) {
             searchs = searchs.filter(search => search.symbol.toUpperCase() != action.payload.symbol.toUpperCase())
             return {
                 ...state,
-                searchs: [...searchs, {
-                    symbol: action.payload.symbol,
-                }]
+                searchs: [...searchs, action.payload]
             }
         }
         case '@wallet/REMOVEHISTORY': {
