@@ -1,70 +1,86 @@
-# Getting Started with Create React App
+# Valora #
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Quer trabalhar em um lugar de constante aprendizado e participar da construção de uma startup em crescimento? Esse lugar é na Valora!
 
-## Available Scripts
+Você irá atuar no time de desenvolvimento e evolução da Valora, uma ferramenta que analisa dados de vendas históricas e acompanha a jornada de vendas em tempo real, calculando o melhor preço.
+Precificando dinamicamente nós aumentamos a venda e o faturamento dos nossos clientes através de algoritmos baseado em data science e machine learning.
 
-In the project directory, you can run:
+Buscamos pessoas com sangue nos olhos e código na veia pra participar do processo de desenvolvimento e construção de um sistema com dashboards e fluxo intenso de exibição e tratamento de dados.
 
-### `yarn start`
+## Ferramentas ##
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Para este desafio você criará um dashboard seguindo o mockup anexado abaixo. Ele deverá conectar a API também anexada abaixo e listar as cotações da bolsa americana de acordo com os tickers buscados. As funcionaliades serão detalhadas logo abaixo.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+* [Mockup](https://s3.amazonaws.com/web.valora.cc/static/media/desafio-valora-dashboard.png)
+* [API](https://financialmodelingprep.com/developer/docs/)
+* [Highcharts](https://www.highcharts.com/demo/stock/intraday-candlestick) Pode usar qualquer outra lib que tenha comportamento similar.
 
-### `yarn test`
+## Layout ##
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Queremos avaliar sua capacidade de implementar o layout proposto seguindo fielmente a estrutura proposta. Apesar do mock ser todo em preto e branco acreditamos que um dev frontend deve ter um senso estético apurado. Libere sua criatividade e fique a vontade para trabalhar nas cores, efeitos, animações e transições mas a estrutura do layout deve manter-se fiel ao mockup. A componentização e o reaproveitamento será um diferencial.
 
-### `yarn build`
+## Linguagem ##
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Queremos avaliar suas habilidades em Javascript ou Typescript, use a linguagem que estiver mais confortável.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Funcionalidades ##
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Gráfico ###
 
-### `yarn eject`
+A busca deverá exibir as cotações do ticker buscado e deverá acontecer apenas quando o usuário utilizar a teclar Enter. Nesse caso o ticker buscado deverá substituir o gráfico atual com as informações do novo ticker.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+O histórico das últimas 5 buscas devem ser listados abaixo do gráfico.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Comparação ###
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Ao digitar um novo ticker, o usuário pode clicar no botão "+" ao lado do campo de busca para incluir aquele ticker para comparação no gráfico. Nesse caso, ambos os tickers devem ser apresentados no gráfico.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Minha carteira ###
 
-## Learn More
+Ao clicar no botão "+" localizado a direita, uma nova linha deverá surgir no componente abaixo para o preenchimento do ticker, quantidade e valor.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+O botão Compra deverá adicionar a quantidade desse ativo a sua carteira. Caso o usuário já tenha esse ativo na carteira, deverá incrementar a quantidade e o preço deverá exibir uma média entre os preços do mesmo ativo. No caso da venda, a quantidade deverá ser decrementada da carteira.
+Os registros de compra e venda deverão ser armazenados de alguma forma. Pode usar o que preferir, banco de dados, localStorage, state ou até em arquivo. Fique à vontade.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Envio ### 
 
-### Code Splitting
+Você deverá criar um fork do nosso repositório e enviar em forma de pull request para análise no próprio repositório do github. Toda a interação será feita por lá. Nossa equipe poderá fazer questionamentos sobre as decisões tomadas durante o desenvolvimento então fique atento para menções à você.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Prazo ### 
 
-### Analyzing the Bundle Size
+Tenha consciência de que no ramo de startup o tempo é uma questão primordial e que valorizamos muito. Caso você tenha algum problema que impossibilite a entrega, pedimos que avise com antecedência e solicite a necessidade de um prazo maior.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Se não consiguir entregar tudo por falta de conhecimento, envie o que você conseguir realizar dentro do prazo estipulado e vamos avaliar com o mesmo respeito e carinho. Você terá um feedback com um encaminhamento de pontos que você deve se dedicar a estudar um pouco mais e futuramente você poderá aplicar novamente em uma outra oportunidade.
 
-### Making a Progressive Web App
+### Recomendações de estudo ### 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Recomendamos como material de estudo para auxiliá-lo no desenvolvimento do desafio as documentações oficiais e um excelente canal no youtube do pessoal da Rocketseat (https://www.youtube.com/channel/UCSfwM5u0Kce6Cce8_S72olg). Eles tem diversos exemplos de implementação de layout, configurações de projeto, boas práticas e novidades do mundo de desenvolvimento frontend e principalmente React.
 
-### Advanced Configuration
+Fique a vontade para buscar ajuda mas lembre-se que o desafio é individual.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
+### Vaga ###
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+* Salário à combinar, de acordo com o cargo
+* Recesso remunerado nos períodos de Natal, Ano Novo e Carnaval
+* Bônus de fim de ano atrelado ao desempenho
 
-### `yarn build` fails to minify
+### Requisitos ###
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* Bons Conhecimentos em Javascript
+* Experiência em React
+* Conhecimento em design e arquitetura de software (OOP, Clean Code, Design Patterns)
+* Conhecimentos de consumo e escrita de serviços (REST)
+* CSS e HTML para construção de sites leves e responsivos para desktop e mobile
+
+### Desejáveis ###
+
+* Conhecimento de escrita de testes automatizados
+* Experiência com Next JS
+* Participação em projetos de desenvolvimento de software do início ao fim
+
+### Envio ###
+
+* Crie um fork deste repositório
+* Desenvolva
+* Submeta um pull request do seu código para code review
