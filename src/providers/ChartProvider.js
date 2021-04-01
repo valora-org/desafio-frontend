@@ -172,7 +172,7 @@ export default function ChartProvider({ children }) {
 
   async function updatePeriod() {
     updatePeriodFeedback(true)
-    let newStocks = chartStocks
+    let newStocks = [...searchs]
     for (let i = 0; i < newStocks.length; i++) {
       let result = await getStockData(newStocks[i].symbol)
       if (result.data.historical)
