@@ -11,15 +11,16 @@ import {
 } from '@chakra-ui/react'
 import { FiChevronDown } from 'react-icons/fi'
 import { useSelector, useDispatch } from 'react-redux'
-import { removeFromHistory, setChartStocks } from '../store/modules/wallet/actions'
+import { removeFromHistory } from '../store/modules/history/actions'
+import { setChartStocks } from '../store/modules/chart/actions'
 import { motion, AnimatePresence } from 'framer-motion'
 import useChart from '../hooks/use-chart'
 
 export default function RecentSearchs() {
   const { appendChartData } = useChart()
 
-  const searchs = useSelector(state => state.wallet.searchs)
-  const chartStocks = useSelector(state => state.wallet.chartStocks)
+  const searchs = useSelector(state => state.history.searchs)
+  const chartStocks = useSelector(state => state.chart.chartStocks)
 
   const dispatch = useDispatch()
 

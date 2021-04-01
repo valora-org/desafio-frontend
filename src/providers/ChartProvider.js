@@ -3,12 +3,15 @@ import { useToast } from '@chakra-ui/react'
 import api from '../services/api'
 import { month, week } from '../services/dates'
 import { useDispatch, useSelector } from 'react-redux'
-import { searchStock, setChartStocks, } from '../store/modules/wallet/actions'
+import { setChartStocks } from '../store/modules/chart/actions'
+import { searchStock } from '../store/modules/history/actions'
+import { charts } from 'highcharts'
 
 export const ChartContext = createContext()
 
 export default function ChartProvider({ children }) {
-  const chartStocks = useSelector(state => state.wallet.chartStocks)
+  const chartStocks = useSelector(state => state.chart.chartStocks)
+  const searchs = useSelector(state => state.history.searchs)
   const dispatch = useDispatch()
   const toast = useToast()
   const [searchTerm, setSearchTerm] = useState()
@@ -133,9 +136,9 @@ export default function ChartProvider({ children }) {
       let series = []
       if (!chartStocks[0].historical) {
         toast({
-          title: "Oops",
-          description: "Não foi possível encontrar os dados para o período requisitado",
-          status: "error",
+          title: "Ops",
+          description: "Ainda não há dados referentes a esse período.",
+          status: "info",
           duration: 9000,
           isClosable: true,
         })
@@ -176,9 +179,9 @@ export default function ChartProvider({ children }) {
         newStocks[i] = result.data
       else
         toast({
-          title: "Oops",
-          description: "Não foi possível encontrar os dados para o período requisitado",
-          status: "error",
+          title: "Ops",
+          description: "Ainda não há dados referentes a esse período.",
+          status: "info",
           duration: 9000,
           isClosable: true,
         })

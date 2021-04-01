@@ -8,12 +8,6 @@ const INITIAL_STATE = {
 
 export default function wallet(state = INITIAL_STATE, action) {
     switch (action.type) {
-        case '@wallet/SETCHART': {
-            return {
-                ...state,
-                chartStocks: action.payload.data
-            }
-        }
         case '@wallet/BUY': {
             let oldStocks = state.stocks
             if (!oldStocks.filter(stock => stock.symbol == action.payload.symbol).length) {
@@ -57,23 +51,6 @@ export default function wallet(state = INITIAL_STATE, action) {
             return {
                 ...state,
                 stocks: [...oldStocks]
-            }
-        }
-        case '@wallet/SEARCH': {
-            let searchs = state.searchs
-            if (searchs.length == 5) {
-                searchs.shift()
-            }
-            searchs = searchs.filter(search => search.symbol.toUpperCase() != action.payload.symbol.toUpperCase())
-            return {
-                ...state,
-                searchs: [...searchs, action.payload]
-            }
-        }
-        case '@wallet/REMOVEHISTORY': {
-            return {
-                ...state,
-                searchs: [...state.searchs.filter(search => search.symbol.toUpperCase() != action.payload.symbol.toUpperCase())]
             }
         }
         default:

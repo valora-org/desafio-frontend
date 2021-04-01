@@ -1,14 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import MainLayout from '../layouts/MainLayout'
-import { Box, Heading, Flex, Button, Stack, IconButton, Input, useToast, Tooltip, ProgressLabel } from '@chakra-ui/react'
+import React from 'react'
+import { Box, Heading, Flex, Button, Stack, IconButton, Input, Tooltip } from '@chakra-ui/react'
 import { BiSearchAlt2 } from 'react-icons/bi'
 import { IoAdd } from 'react-icons/io5'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
-import api from '../services/api'
-import { month, week } from '../services/dates'
-import { useDispatch, useSelector } from 'react-redux'
-import { searchStock, setChartStocks, } from '../store/modules/wallet/actions'
 
 import useChart from '../hooks/use-chart'
 
