@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import MainLayout from '../layouts/MainLayout'
-import { Box, Heading, Flex, Button, Stack, IconButton, Input } from '@chakra-ui/react'
-import { BiSearchAlt2 } from 'react-icons/bi'
-import { IoAdd } from 'react-icons/io5'
+import { Box } from '@chakra-ui/react'
 
 import PriceChart from '../components/PriceChart'
 import RecentSearchs from '../components/RecentSearchs'
 import MyWallet from '../components/MyWallet'
-import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion'
+import { motion, AnimateSharedLayout } from 'framer-motion'
 
 export default function Dashboard() {
   const animation = {

@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react'
-import { Box, IconButton, Flex, Stack, Text } from '@chakra-ui/react'
+import React from 'react'
+import { Box, IconButton, Flex } from '@chakra-ui/react'
 import { FiMenu } from 'react-icons/fi'
 import { BiSearchAlt2 } from 'react-icons/bi'
 import { ImHome3 } from 'react-icons/im'

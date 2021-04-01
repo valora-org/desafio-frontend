@@ -5,7 +5,6 @@ import { month, week } from '../services/dates'
 import { useDispatch, useSelector } from 'react-redux'
 import { setChartStocks } from '../store/modules/chart/actions'
 import { searchStock } from '../store/modules/history/actions'
-import { charts } from 'highcharts'
 
 export const ChartContext = createContext()
 
