@@ -77,8 +77,8 @@ export default function ChartProvider({ children }) {
     if (!result.data.historical) {
       toast({
         title: "Oops",
-        description: "Não foi possível encontrar o ticker informado",
-        status: "error",
+        description: "Não foi possível encontrar dados para o ticker informado",
+        status: "info",
         duration: 9000,
         isClosable: true,
       })
@@ -137,7 +137,7 @@ export default function ChartProvider({ children }) {
       if (!chartStocks[0].historical) {
         toast({
           title: "Ops",
-          description: "Ainda não há dados referentes a esse período.",
+          description: `Ainda não há dados referentes a esse período.`,
           status: "info",
           duration: 9000,
           isClosable: true,
@@ -180,7 +180,7 @@ export default function ChartProvider({ children }) {
       else
         toast({
           title: "Ops",
-          description: "Ainda não há dados referentes a esse período.",
+          description: `Ainda não há dados referentes a esse período.`,
           status: "info",
           duration: 9000,
           isClosable: true,
