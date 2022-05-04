@@ -17,19 +17,19 @@ Para este desafio você criará um dashboard seguindo o mockup anexado abaixo. E
 
 ## Layout ##
 
-Queremos avaliar sua capacidade de implementar o layout proposto seguindo fielmente a estrutura proposta. Apesar do mock ser todo em preto e branco acreditamos que um dev frontend deve ter um senso estético apurado. Libere sua criatividade e fique a vontade para trabalhar nas cores, efeitos, animações e transições mas a estrutura do layout deve manter-se fiel ao mockup. A componentização e o reaproveitamento será um diferencial.
+Queremos avaliar sua capacidade de implementar o layout proposto seguindo fielmente a estrutura proposta. Apesar do mock ser todo em preto e branco acreditamos que um dev frontend deve ter um senso estético apurado. Libere sua criatividade e fique a vontade para trabalhar nas cores, efeitos, animações e transições mas a estrutura do layout deve manter-se fiel ao mockup. A componentização e o reaproveitamento dos componentes será um diferencial.
 
 ## Linguagem ##
 
-Queremos avaliar suas habilidades em Javascript ou Typescript, use a linguagem que estiver mais confortável.
+Queremos avaliar suas habilidades em Typescript.
 
 ## Funcionalidades ##
 
 ### Gráfico ###
 
-A busca deverá exibir as cotações do ticker buscado e deverá acontecer apenas quando o usuário utilizar a teclar Enter. Nesse caso o ticker buscado deverá substituir o gráfico atual com as informações do novo ticker.
+A busca deverá exibir as cotações do ticker buscado e deverá acontecer apenas quando o usuário utilizar a tecla Enter ou clicar no botão da lupa. Nesse caso o ticker buscado deverá substituir o gráfico atual com as informações do novo ticker.
 
-O histórico das últimas 5 buscas devem ser listados abaixo do gráfico.
+O histórico das últimas 5 buscas devem ser listadas abaixo do gráfico.
 
 ### Comparação ###
 
@@ -44,13 +44,17 @@ Os registros de compra e venda deverão ser armazenados de alguma forma. Pode us
 
 ### Envio ### 
 
-Você deverá criar um fork do nosso repositório e enviar em forma de pull request para análise no próprio repositório do github. Toda a interação será feita por lá. Nossa equipe poderá fazer questionamentos sobre as decisões tomadas durante o desenvolvimento então fique atento para menções à você.
+Você deverá criar um fork do nosso repositório e enviar em forma de pull request para análise no próprio repositório do github. Toda a interação será feita por aqui. Nossa equipe poderá fazer questionamentos sobre as decisões tomadas durante o desenvolvimento então fique atento para menções à você.
+
+Não é necessário realizar o deploy da aplicação, mas caso seja possível poderá contar como um diferencial positivo. Neste caso, envie o link da aplicação junto ao pull request.
 
 ### Prazo ### 
 
-Tenha consciência de que no ramo de startup o tempo é uma questão primordial e que valorizamos muito. Caso você tenha algum problema que impossibilite a entrega, pedimos que avise com antecedência e solicite a necessidade de um prazo maior.
+Acreditamos que o prazo de 7 dias seja suficiente para a conclusão do desafio, mas tenha consciência de que no ramo de startups o tempo é uma questão primordial e que valorizamos muito. Se terminar antes, entregue antes.
 
-Se não consiguir entregar tudo por falta de conhecimento, envie o que você conseguir realizar dentro do prazo estipulado e vamos avaliar com o mesmo respeito e carinho. Você terá um feedback com um encaminhamento de pontos que você deve se dedicar a estudar um pouco mais e futuramente você poderá aplicar novamente em uma outra oportunidade.
+Caso tenha algum problema que impossibilite a entrega, pedimos que avise com antecedência e solicite a necessidade de um prazo maior ou a desistência do processo.
+
+Se não conseguir entregar tudo por falta de conhecimento ou tempo, envie o que conseguir realizar dentro do prazo estipulado e vamos avaliar com o mesmo respeito e carinho. Você receberá um feedback após a avaliação, seja ele positivo dando sequência no processo de contratação ou negativo, com um encaminhamento de pontos em que você deve se dedicar a estudar um pouco mais e no futuro poderá aplicar novamente em uma outra oportunidade.
 
 ### Recomendações de estudo ### 
 
