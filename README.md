@@ -11,7 +11,7 @@ Buscamos pessoas com sangue nos olhos e código na veia pra participar do proces
 
 Para este desafio você criará um dashboard seguindo o mockup anexado abaixo. Ele deverá conectar a API também anexada abaixo e listar as cotações da bolsa americana de acordo com os tickers buscados. As funcionaliades serão detalhadas logo abaixo.
 
-* [Mockup](https://s3.amazonaws.com/web.valora.cc/static/media/desafio-valora-dashboard.png)
+* [Mockup](https://github.com/valora-org/desafio-frontend/blob/main/desafio-valora-dashboard.png)
 * [API](https://financialmodelingprep.com/developer/docs/)
 * [Highcharts](https://www.highcharts.com/demo/stock/intraday-candlestick) Pode usar qualquer outra lib que tenha comportamento similar.
 
