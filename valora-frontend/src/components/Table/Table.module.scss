@@ -1,0 +1,21 @@
+.tableContent {
+  display: flex;
+  flex-direction: column;
+
+  color: var(--color-white);
+  border: 1px solid var(--color-grey);
+  padding: 12px;
+}
+
+.tableRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 12px 0;
+}
+
+.tableCell {
+  display: flex;
+  font-weight: bold;
+  flex-grow: 1;
+}
