@@ -6,14 +6,7 @@ import styles from "./MyWallet.module.scss";
 export const MyWallet = () => {
   return (
     <div>
-      <div
-        style={{
-          color: "white",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
+      <div className={styles.container}>
         <h1>Buscas Recentes</h1>
         <FiArrowDown />
       </div>
