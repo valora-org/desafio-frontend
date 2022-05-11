@@ -9,7 +9,7 @@ export const AppBar = () => {
       <div className={styles.container}>
         <div className={styles.navWrapper}>
           <div className={styles.menu}>
-            <FiMenu size={32} color={"black"} />
+            <FiMenu size={32} color={"white"} />
           </div>
         </div>
         <div className={styles.navWrapper}>

@@ -10,7 +10,7 @@ type ButtonProps = {
   secondary?: boolean;
   tertiary?: boolean;
   disabled?: boolean;
-  content: string;
+  content?: string;
 };
 
 export const Button: FC<ButtonProps> = ({

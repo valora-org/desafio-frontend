@@ -1,58 +1,14 @@
-import React from "react";
+import React, { FC } from "react";
 import { Button } from "../Button";
 
 import styles from "./Table.module.scss";
+import { TableCell } from "./TableCell";
+import { TableRow } from "./TableRow";
 
-export const Table = () => {
-  return (
-    <div className={styles.tableContent}>
-      <div className={styles.tableRow}>
-        <div className={styles.tableCell}>Apple Inc. (AAPL)</div>
-        <div className={styles.tableCell}>
-          <div>R$ 227.27</div>
-          <div>Abertura</div>
-        </div>
-        <div className={styles.tableCell}>
-          <div>R$ 227.27</div>
-          <div>Fechamento</div>
-        </div>
-        <div className={styles.tableCell}>
-          <Button content="Adicionar" primary />
-          <Button content="Remover" secondary />
-        </div>
-      </div>
+type TableProps = {
+  children: React.ReactNode;
+};
 
-      <div className={styles.tableRow}>
-        <div className={styles.tableCell}>Amazon.com, Inc (AMZN)</div>
-        <div className={styles.tableCell}>
-          <div>R$ 227.27</div>
-          <div>Abertura</div>
-        </div>
-        <div className={styles.tableCell}>
-          <div>R$ 227.27</div>
-          <div>Fechamento</div>
-        </div>
-        <div className={styles.tableCell}>
-          <Button content="Adicionar" primary />
-          <Button content="Remover" secondary />
-        </div>
-      </div>
-
-      <div className={styles.tableRow}>
-        <div className={styles.tableCell}>Alphabet Inc. (GOOG)</div>
-        <div className={styles.tableCell}>
-          <div>R$ 227.27</div>
-          <div>Abertura</div>
-        </div>
-        <div className={styles.tableCell}>
-          <div>R$ 227.27</div>
-          <div>Fechamento</div>
-        </div>
-        <div className={styles.tableCell}>
-          <Button content="Adicionar" primary />
-          <Button content="Remover" secondary />
-        </div>
-      </div>
-    </div>
-  );
+export const Table: FC<TableProps> = ({ children }) => {
+  return <div className={styles.tableContent}>{children}</div>;
 };

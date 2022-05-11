@@ -7,13 +7,13 @@ import styles from "./Sidebar.module.scss";
 export const Sidebar = () => {
   return (
     <div className={styles.container}>
-      <FiSearch size={32} className={styles.icon} />
-      <FiHome size={32} className={styles.icon} />
-      <HiDocumentReport size={32} className={styles.icon} />
+      <FiSearch size={24} className={styles.icon} />
+      <FiHome size={24} className={styles.icon} />
+      <HiDocumentReport size={24} className={styles.icon} />
 
-      <FaRegFileImage size={32} className={styles.icon} />
-      <FaRegCalendar size={32} className={styles.icon} />
-      <FiSettings size={32} className={styles.icon} />
+      <FaRegFileImage size={24} className={styles.icon} />
+      <FaRegCalendar size={24} className={styles.icon} />
+      <FiSettings size={24} className={styles.icon} />
     </div>
   );
 };
