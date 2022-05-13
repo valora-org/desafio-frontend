@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import Select from "react-select";
+import { TickersContext } from "../../contexts/useTickers";
 import { financialApi } from "../../services/api";
 import { Button } from "../Button";
 import { Table } from "../Table";
@@ -55,6 +56,15 @@ export const MyWallet = () => {
       ...selectedShare,
       price: data[0].price,
     });
+  };
+
+  const { stocks, addStock } = useContext(TickersContext);
+
+  const handleAddShare = () => {
+    addStock(selectedShare.name);
+
+    setSelectedShare({} as Share);
+    setNewWalletName("");
   };
 
   return (
@@ -116,7 +126,7 @@ export const MyWallet = () => {
               <div>Data</div>
             </TableCell>
             <TableCell>
-              <Button content="Compra" primary />
+              <Button content="Compra" primary onClick={handleAddShare} />
             </TableCell>
             <TableCell>
               <Button content="Venda" secondary />

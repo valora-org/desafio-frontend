@@ -1,0 +1,31 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    color: var(--color-white);
+  }
+
+  .search {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  .period {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+  
+  .icon {
+    color: var(--color-white);
+    svg {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+  }
+  
