@@ -1,8 +1,9 @@
 import { FC, useContext, useEffect, useMemo, useState } from "react";
 import { Button } from "../Button";
 import styles from "./StockChart.module.scss";
-import { Input } from "../Input";
-import { financialApi } from "../../services/api";
+// import { Input } from "../Input";
+import Select from "react-select";
+import { asyncFetchSymbolList, financialApi } from "../../services/api";
 
 import Highcharts, {
   ChartOptions,
@@ -11,6 +12,7 @@ import Highcharts, {
 } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { TickersContext } from "../../contexts/useTickers";
+import toast from "react-hot-toast";
 
 type HistoricalData = {
   close: number;
@@ -30,7 +32,8 @@ export const StockChart: FC = () => {
   const [searchStocks, setSearchStocks] = useState<string>("");
 
   const [currentStocks, setCurrentStocks] = useState<HistoricalStock[]>([]);
-  const { stocksOnChart, addStockOnChart } = useContext(TickersContext);
+  const { stocksOnChart, addStockOnChart, symbolList, setSymbolList } =
+    useContext(TickersContext);
   const [period, setPeriod] = useState<"1min" | "5min" | "15min">("1min");
 
   const options = useMemo(() => {
@@ -76,6 +79,22 @@ export const StockChart: FC = () => {
     fetchCurrentStocksHistoricalChart();
   }, [stocksOnChart, period]);
 
+  useEffect(() => {
+    async function fetchSymbolList() {
+      const data = await asyncFetchSymbolList();
+
+      const options = data.map((symbolList: any) => ({
+        value: symbolList,
+        label: symbolList,
+      }));
+
+      setSymbolList(options);
+    }
+    fetchSymbolList();
+  }, [setSymbolList]);
+
+  const { addOnRecentStocks } = useContext(TickersContext);
+
   return (
     <div>
       <div className={styles.header}>
@@ -83,13 +102,30 @@ export const StockChart: FC = () => {
           <h1 className={styles.title}>Grafico de Preços</h1>
         </div>
         <div className={styles.search}>
-          <Input
-            type="text"
-            placeholder="AAPL, GOOG, MSFT"
-            onChange={(event) =>
-              setSearchStocks(event.target.value.toUpperCase())
+          <Select
+            placeholder="AAPL, GOOG"
+            styles={{
+              placeholder: (provided) => ({
+                ...provided,
+                color: "grey",
+              }),
+              input: (provided) => ({
+                ...provided,
+                color: "grey",
+                width: "200px",
+              }),
+            }}
+            onInputChange={(newValue) =>
+              setSearchStocks(newValue.toUpperCase())
             }
-            value={searchStocks}
+            options={searchStocks.length >= 2 ? symbolList : []}
+            onChange={(selectedOption) => {
+              if (selectedOption) {
+                addStockOnChart(selectedOption.value);
+                toast(`${selectedOption.value} adicionado ao gráfico`);
+                addOnRecentStocks(selectedOption.value);
+              }
+            }}
           />
           <Button
             onClick={() => {

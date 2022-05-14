@@ -7,10 +7,17 @@ type TickersProviderProps = {
   children: React.ReactNode;
 };
 
+type Options = {
+  value: string;
+  label: string;
+};
+
 type TickersConsumerProps = {
   stocks: string[];
   stocksOnChart: string[];
   recentStocks: string[];
+  symbolList: Options[];
+  setSymbolList: (symbolList: Options[]) => void;
   addStock: (symbol: string) => void;
   removeStock: (symbol: string) => void;
   addStockOnChart: (symbol: string) => void;
@@ -23,6 +30,8 @@ export function TickersProvider({ children }: TickersProviderProps) {
   const [stocks, setStocks] = useState<string[]>([]);
   const [stocksOnChart, setStocksOnChart] = useState<string[]>([]);
   const [recentStocks, setRecentStocks] = useState<string[]>([]);
+
+  const [symbolList, setSymbolList] = useState<Options[]>([]);
 
   function addStock(stock: string) {
     setStocks([...stocks, stock]);
@@ -61,6 +70,8 @@ export function TickersProvider({ children }: TickersProviderProps) {
           addOnRecentStocks,
           removeOnRecentStocks,
           recentStocks,
+          symbolList,
+          setSymbolList,
         } as TickersConsumerProps
       }
     >

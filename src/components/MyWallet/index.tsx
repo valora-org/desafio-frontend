@@ -98,6 +98,12 @@ export const MyWallet = () => {
             <TableCell>
               <div style={{ paddingRight: 12 }}>
                 <Select
+                  styles={{
+                    option: (provided) => ({
+                      ...provided,
+                      color: "grey",
+                    }),
+                  }}
                   options={newWalletName.length >= 3 ? shares : []}
                   inputValue={newWalletName}
                   onInputChange={(newValue) => setNewWalletName(newValue)}
