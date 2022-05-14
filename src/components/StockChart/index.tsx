@@ -1,11 +1,71 @@
-import { FC, useState } from "react";
+import { FC, useContext, useEffect, useMemo, useState } from "react";
 import { Button } from "../Button";
 import { TableHeader } from "../TableHeader";
 import styles from "./StockChart.module.scss";
-import {} from "highcharts";
+import { Input } from "../Input";
+import { api, financialApi } from "../../services/api";
+
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
+import { title } from "process";
+import { TickersContext } from "../../contexts/useTickers";
+
+type HistoricalData = {
+  close: number;
+  date: string;
+  high: number;
+  low: number;
+  open: number;
+  volume: number;
+};
+
+type HistoricalStock = {
+  name: string;
+  historic: HistoricalData[];
+};
+
 export const StockChart: FC = () => {
   const [searchStocks, setSearchStocks] = useState<string>("");
-  const [stocks, setStocks] = useState<string[]>([]);
+
+  const [currentStocks, setCurrentStocks] = useState<HistoricalStock[]>([]);
+  const { stocksOnChart, addStockOnChart } = useContext(TickersContext);
+  const [period, setPeriod] = useState<"1min" | "5min" | "15min">("1min");
+
+  const options = useMemo(() => {
+    return {
+      title: {
+        text: "Historical Stock Prices",
+      },
+      series: currentStocks.map((stock) => {
+        return {
+          name: stock.name,
+          data: stock.historic.map((data) => [data.date, data.close]),
+        };
+      }),
+    };
+  }, [currentStocks]);
+
+  useEffect(() => {
+    async function fetchCurrentStocksHistoricalChart() {
+      new Promise((resolve) => {
+        stocksOnChart.forEach(async (stock) => {
+          const { data } = await financialApi.get(
+            `/historical-chart/${period}/${stock}`
+          );
+
+          setCurrentStocks((currentStocks) => [
+            ...currentStocks,
+            {
+              name: stock,
+              historic: data,
+            },
+          ]);
+        });
+        resolve(true);
+      });
+    }
+    fetchCurrentStocksHistoricalChart();
+  }, [stocksOnChart, period]);
 
   return (
     <div>
@@ -14,23 +74,41 @@ export const StockChart: FC = () => {
           <h1 className={styles.title}>Grafico de Preços</h1>
         </div>
         <div className={styles.search}>
-          <input
+          <Input
             type="text"
-            onChange={(event) => {
-              setSearchStocks(event.target.value);
-            }}
+            placeholder="AAPL, GOOG, MSFT"
+            onChange={(event) => setSearchStocks(event.target.value)}
             value={searchStocks}
           />
-          <Button>Buscar</Button>
+          <Button onClick={() => addStockOnChart(searchStocks)}>Buscar</Button>
         </div>
         <div className={styles.period}>
-          <Button>D</Button>
-          <Button>S</Button>
-          <Button>M</Button>
+          <Button
+            onClick={() => setPeriod("1min")}
+            secondary={period === "1min"}
+          >
+            D
+          </Button>
+          <Button
+            onClick={() => setPeriod("5min")}
+            secondary={period === "5min"}
+          >
+            S
+          </Button>
+          <Button
+            onClick={() => setPeriod("15min")}
+            secondary={period === "15min"}
+          >
+            M
+          </Button>
         </div>
       </div>
 
-      <div className="chart"></div>
+      <div className="chart">
+        {currentStocks.length > 0 && (
+          <HighchartsReact highcharts={Highcharts} options={options} />
+        )}
+      </div>
     </div>
   );
 };

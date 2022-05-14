@@ -59,8 +59,8 @@ export const RecentSearchTableRow: FC<RecentSearchTableRowProps> = ({
       {!isLoading && (
         <TableRow>
           <TableCell>
-            <div>{fullStockInfo.name}</div>
-            <div>{fullStockInfo.symbol}</div>
+            <div>{fullStockInfo?.name}</div>
+            <div>{fullStockInfo?.symbol}</div>
           </TableCell>
           <TableCell>
             <div>{convertFloatToUSD(fullStockInfo?.open || 0)}</div>
