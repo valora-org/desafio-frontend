@@ -61,6 +61,7 @@ export const MyWallet = () => {
   const { stocks, addStock } = useContext(TickersContext);
 
   const handleAddShare = () => {
+    if (!selectedShare.name) return;
     addStock(selectedShare.name);
 
     setSelectedShare({} as Share);
