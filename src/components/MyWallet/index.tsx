@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import toast from "react-hot-toast";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import Select from "react-select";
 import { WalletContext } from "../../contexts/useWallet";
@@ -48,7 +47,7 @@ export const MyWallet = () => {
       }));
       setShares(options);
     } catch (error) {
-      console.error(error);
+      throw new Error("Error fetching symbol list");
     }
   }
 
@@ -63,7 +62,7 @@ export const MyWallet = () => {
         price: data.price,
       });
     } catch (error) {
-      console.error(error);
+      throw new Error("Error fetching share price");
     }
   };
 

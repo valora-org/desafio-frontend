@@ -1,9 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { WalletContext } from "../../contexts/useWallet";
-import {
-  asyncFetchQuoteShortInformation,
-  financialApi,
-} from "../../services/api";
+import { asyncFetchQuoteShortInformation } from "../../services/api";
 import { convertFloatToUSD } from "../../utils/currency";
 import { Button } from "../Button";
 import { TableCell } from "../Table/TableCell";
