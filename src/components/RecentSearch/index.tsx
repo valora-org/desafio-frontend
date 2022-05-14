@@ -7,7 +7,7 @@ import { TableHeader } from "../TableHeader";
 import { RecentSearchTableRow } from "./RecentSearchTableRow";
 
 export const RecentSearch = () => {
-  const { stocks } = useContext(TickersContext);
+  const { recentStocks } = useContext(TickersContext);
 
   return (
     <div>
@@ -17,7 +17,7 @@ export const RecentSearch = () => {
         </Button>
       </TableHeader>
       <Table>
-        {stocks.map((stock, index) => (
+        {recentStocks.map((stock, index) => (
           <RecentSearchTableRow key={index} stock={stock} />
         ))}
       </Table>

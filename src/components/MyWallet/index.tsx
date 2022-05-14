@@ -1,10 +1,12 @@
 import { useContext, useState } from "react";
+import toast from "react-hot-toast";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import Select from "react-select";
+import { TickersContext } from "../../contexts/useTickers";
 import { WalletContext } from "../../contexts/useWallet";
 import {
   asyncFetchQuoteShortInformation,
-  financialApi,
+  asyncFetchSymbolList,
 } from "../../services/api";
 import { Button } from "../Button";
 import { Table } from "../Table";
@@ -37,17 +39,16 @@ export const MyWallet = () => {
   }
 
   async function fetchSymbolList() {
+    if (openNewWalletField) return;
     try {
-      const { data } = await financialApi.get(
-        "/financial-statement-symbol-lists"
-      );
+      const data = await asyncFetchSymbolList();
       const options = data.map((symbolList: any) => ({
         value: symbolList,
         label: symbolList,
       }));
       setShares(options);
     } catch (error) {
-      throw new Error("Error fetching symbol list");
+      toast.error("Não foi possível carregar a lista de códigos");
     }
   }
 
@@ -62,18 +63,22 @@ export const MyWallet = () => {
         price: data.price,
       });
     } catch (error) {
-      throw new Error("Error fetching share price");
+      toast("Não foi possível carregar o preço atual");
     }
   };
 
   const { stocksInWallet, addStockInWallet } = useContext(WalletContext);
-
+  const { addOnRecentStocks } = useContext(TickersContext);
   const handleAddShare = () => {
     if (!selectedShare.name) return;
 
     addStockInWallet(selectedShare.name);
+    addOnRecentStocks(selectedShare.name);
+
     setSelectedShare({} as Share);
     setNewWalletName("");
+
+    setOpenNewWalletField(false);
   };
 
   return (
@@ -89,7 +94,7 @@ export const MyWallet = () => {
           return <WalletTableRow key={stock.name} stock={stock} />;
         })}
         {openNewWalletField && (
-          <TableRow rows={4}>
+          <TableRow rows={3}>
             <TableCell>
               <div style={{ paddingRight: 12 }}>
                 <Select
@@ -108,9 +113,6 @@ export const MyWallet = () => {
             <TableCell>
               <div>Preço</div>
               <div>{selectedShare.price}</div>
-            </TableCell>
-            <TableCell>
-              <div>Data</div>
             </TableCell>
             <TableCell>
               <Button content="Compra" primary onClick={handleAddShare} />

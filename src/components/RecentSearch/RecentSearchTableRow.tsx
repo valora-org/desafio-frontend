@@ -1,5 +1,6 @@
-import { FC, useContext, useEffect, useState } from "react";
-import { TickersContext } from "../../contexts/useTickers";
+import { FC, useContext, useEffect, useMemo, useState } from "react";
+import toast from "react-hot-toast";
+import { WalletContext } from "../../contexts/useWallet";
 import { financialApi } from "../../services/api";
 import { convertFloatToUSD } from "../../utils/currency";
 import { Button } from "../Button";
@@ -41,14 +42,24 @@ export const RecentSearchTableRow: FC<RecentSearchTableRowProps> = ({
   const [fullStockInfo, setFullStockInfo] = useState({} as Stock);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { removeStock } = useContext(TickersContext);
+  const { addStockInWallet, removeStockInWallet, stocksInWallet } =
+    useContext(WalletContext);
+
+  const hasStockInWallet = useMemo(() => {
+    return stocksInWallet.find((stockInWallet) => stockInWallet.name === stock);
+  }, [stock, stocksInWallet]);
 
   useEffect(() => {
     async function fetchQuoteStock() {
-      setIsLoading(true);
-      const { data } = await financialApi.get(`/quote/${stock}`);
-      setFullStockInfo(data[0]);
-      setIsLoading(false);
+      try {
+        setIsLoading(true);
+        const { data } = await financialApi.get(`/quote/${stock}`);
+        setFullStockInfo(data[0]);
+      } catch (error) {
+        toast.error("Não foi possível carregar a cotação");
+      } finally {
+        setIsLoading(false);
+      }
     }
     fetchQuoteStock();
   }, [stock]);
@@ -71,11 +82,16 @@ export const RecentSearchTableRow: FC<RecentSearchTableRowProps> = ({
             <div>Fechamento</div>
           </TableCell>
           <TableCell direction="row">
-            <Button content="Adicionar" primary />
+            <Button
+              content="Adicionar"
+              primary
+              onClick={() => addStockInWallet(stock)}
+            />
             <Button
               content="Remover"
               secondary
-              onClick={() => removeStock(stock)}
+              onClick={() => removeStockInWallet(stock)}
+              disabled={!hasStockInWallet}
             />
           </TableCell>
         </TableRow>

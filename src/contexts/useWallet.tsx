@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { createContext, useState } from "react";
 import toast from "react-hot-toast";
 

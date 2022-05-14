@@ -11,12 +11,16 @@
   flex-direction: row;
   align-items: center;
   margin: 12px 0;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 }
 
 .tableCell {
   display: flex;
   font-weight: bold;
   flex-direction: column;
+
   flex-grow: 1;
-  gap: 8px;
 }

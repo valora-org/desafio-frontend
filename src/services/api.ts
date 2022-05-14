@@ -12,8 +12,13 @@ export const financialApi = axios.create({
 export async function asyncFetchQuoteShortInformation(stockName: string) {
   try {
     const { data } = await financialApi(`quote-short/${stockName}`);
-    return data[0].price;
+    return data[0];
   } catch (error) {
     throw new Error("Error in Quote-Short Request");
   }
+}
+
+export async function asyncFetchSymbolList() {
+  const { data } = await financialApi.get("/financial-statement-symbol-lists");
+  return data;
 }
