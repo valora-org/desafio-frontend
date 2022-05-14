@@ -1,7 +1,6 @@
 import { FC, useContext, useEffect, useMemo, useState } from "react";
 import { Button } from "../Button";
 import styles from "./StockChart.module.scss";
-// import { Input } from "../Input";
 import Select from "react-select";
 import { asyncFetchSymbolList, financialApi } from "../../services/api";
 
@@ -9,6 +8,7 @@ import Highcharts, {
   ChartOptions,
   SeriesOptionsType,
   TitleOptions,
+  XAxisOptions,
 } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { TickersContext } from "../../contexts/useTickers";
@@ -34,24 +34,33 @@ export const StockChart: FC = () => {
   const [currentStocks, setCurrentStocks] = useState<HistoricalStock[]>([]);
   const { stocksOnChart, addStockOnChart, symbolList, setSymbolList } =
     useContext(TickersContext);
-  const [period, setPeriod] = useState<"1min" | "5min" | "15min">("1min");
+  const [period, setPeriod] = useState<"1min" | "5min" | "15min">("5min");
 
   const options = useMemo(() => {
     return {
       title: {
         text: "Historical Stock Prices",
       } as TitleOptions,
-      series: currentStocks.map((stock) => {
+      xAxis: {
+        type: "category",
+      } as XAxisOptions,
+      series: currentStocks?.map((stock) => {
         return {
           name: stock.name,
-          data: stock.historic.map((data) => [data.date, data.close]),
+          data: stock?.historic
+            ?.map((data) => [data.date, data.close])
+            .reverse(),
           type: "line",
-
           tooltip: {
             valueDecimals: 2,
           },
+          accessibility: {
+            enabled: true,
+          },
+          showInLegend: true,
         } as SeriesOptionsType;
       }),
+
       alignTicks: true,
     } as ChartOptions;
   }, [currentStocks]);
