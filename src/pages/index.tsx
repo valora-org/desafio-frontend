@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import { Toaster } from "react-hot-toast";
 import { MyWallet } from "../components/MyWallet";
 import { RecentSearch } from "../components/RecentSearch";
 import { StockChart } from "../components/StockChart";
@@ -16,6 +17,7 @@ const Home: NextPage = () => {
           <MyWallet />
         </TemplateDashboard>
       </WalletProvider>
+      <Toaster />
     </TickersProvider>
   );
 };

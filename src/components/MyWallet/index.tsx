@@ -1,8 +1,12 @@
 import { useContext, useState } from "react";
+import toast from "react-hot-toast";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import Select from "react-select";
 import { WalletContext } from "../../contexts/useWallet";
-import { financialApi } from "../../services/api";
+import {
+  asyncFetchQuoteShortInformation,
+  financialApi,
+} from "../../services/api";
 import { Button } from "../Button";
 import { Table } from "../Table";
 import { TableCell } from "../Table/TableCell";
@@ -34,27 +38,33 @@ export const MyWallet = () => {
   }
 
   async function fetchSymbolList() {
-    const { data } = await financialApi.get(
-      "/financial-statement-symbol-lists"
-    );
-    const options = data.map((symbolList: any) => ({
-      value: symbolList,
-      label: symbolList,
-    }));
-    setShares(options);
+    try {
+      const { data } = await financialApi.get(
+        "/financial-statement-symbol-lists"
+      );
+      const options = data.map((symbolList: any) => ({
+        value: symbolList,
+        label: symbolList,
+      }));
+      setShares(options);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   const asyncFetchShareActualPrice = async () => {
     if (!selectedShare.name) return;
 
-    const { data } = await financialApi.get(
-      `quote-short/${selectedShare.name}`
-    );
+    try {
+      const data = await asyncFetchQuoteShortInformation(selectedShare.name);
 
-    setSelectedShare({
-      ...selectedShare,
-      price: data[0].price,
-    });
+      setSelectedShare({
+        ...selectedShare,
+        price: data.price,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const { stocksInWallet, addStockInWallet } = useContext(WalletContext);

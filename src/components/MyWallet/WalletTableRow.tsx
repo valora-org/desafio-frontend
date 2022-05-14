@@ -1,6 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { WalletContext } from "../../contexts/useWallet";
-import { financialApi } from "../../services/api";
+import {
+  asyncFetchQuoteShortInformation,
+  financialApi,
+} from "../../services/api";
 import { convertFloatToUSD } from "../../utils/currency";
 import { Button } from "../Button";
 import { TableCell } from "../Table/TableCell";
@@ -23,11 +26,13 @@ export function WalletTableRow({ stock }: WalletTableRowProps) {
     async function fetchStockFullInfo() {
       if (!stock.name) return;
 
-      const { data } = await financialApi.get(`quote-short/${stock.name}`);
-      setStockFullInfo(data[0]);
+      const data = await asyncFetchQuoteShortInformation(stock.name);
+      setStockFullInfo(data);
     }
     fetchStockFullInfo();
   }, [stock]);
+
+  const isLastStock = useMemo(() => stock.quantity === 0, [stock]);
 
   return (
     <TableRow rows={6}>
@@ -55,7 +60,7 @@ export function WalletTableRow({ stock }: WalletTableRowProps) {
       </TableCell>
       <TableCell>
         <Button
-          content="Venda"
+          content={isLastStock ? "Remover" : "Vender"}
           secondary
           onClick={() => decreaseStockInWallet(stock.name)}
         />

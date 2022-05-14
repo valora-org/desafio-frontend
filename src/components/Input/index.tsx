@@ -1,4 +1,4 @@
-import { FC, InputHTMLAttributes, ReactHTMLElement } from "react";
+import { FC, InputHTMLAttributes } from "react";
 import styles from "./Input.module.scss";
 
 type InputProps = {} & InputHTMLAttributes<HTMLInputElement>;
