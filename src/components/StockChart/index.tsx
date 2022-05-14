@@ -5,7 +5,13 @@ import styles from "./StockChart.module.scss";
 import { Input } from "../Input";
 import { api, financialApi } from "../../services/api";
 
-import Highcharts from "highcharts";
+import Highcharts, {
+  ChartOptions,
+  SeriesOptions,
+  SeriesOptionsType,
+  TitleOptions,
+  TooltipOptions,
+} from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { title } from "process";
 import { TickersContext } from "../../contexts/useTickers";
@@ -35,18 +41,25 @@ export const StockChart: FC = () => {
     return {
       title: {
         text: "Historical Stock Prices",
-      },
+      } as TitleOptions,
       series: currentStocks.map((stock) => {
         return {
           name: stock.name,
           data: stock.historic.map((data) => [data.date, data.close]),
-        };
+          type: "line",
+
+          tooltip: {
+            valueDecimals: 2,
+          },
+        } as SeriesOptionsType;
       }),
-    };
+      alignTicks: true,
+    } as ChartOptions;
   }, [currentStocks]);
 
   useEffect(() => {
     async function fetchCurrentStocksHistoricalChart() {
+      setCurrentStocks([]);
       new Promise((resolve) => {
         stocksOnChart.forEach(async (stock) => {
           const { data } = await financialApi.get(
@@ -77,10 +90,19 @@ export const StockChart: FC = () => {
           <Input
             type="text"
             placeholder="AAPL, GOOG, MSFT"
-            onChange={(event) => setSearchStocks(event.target.value)}
+            onChange={(event) =>
+              setSearchStocks(event.target.value.toUpperCase())
+            }
             value={searchStocks}
           />
-          <Button onClick={() => addStockOnChart(searchStocks)}>Buscar</Button>
+          <Button
+            onClick={() => {
+              addStockOnChart(searchStocks);
+              setSearchStocks("");
+            }}
+          >
+            Buscar
+          </Button>
         </div>
         <div className={styles.period}>
           <Button
@@ -105,9 +127,7 @@ export const StockChart: FC = () => {
       </div>
 
       <div className="chart">
-        {currentStocks.length > 0 && (
-          <HighchartsReact highcharts={Highcharts} options={options} />
-        )}
+        <HighchartsReact highcharts={Highcharts} options={options} />
       </div>
     </div>
   );

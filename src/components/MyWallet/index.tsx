@@ -45,7 +45,6 @@ export const MyWallet = () => {
   }
 
   const asyncFetchShareActualPrice = async () => {
-    console.log("asyncFetchShareActualPrice");
     if (!selectedShare.name) return;
 
     const { data } = await financialApi.get(
