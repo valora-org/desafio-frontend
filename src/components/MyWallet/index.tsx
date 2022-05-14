@@ -1,14 +1,14 @@
 import { useContext, useState } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import Select from "react-select";
-import { TickersContext } from "../../contexts/useTickers";
+import { WalletContext } from "../../contexts/useWallet";
 import { financialApi } from "../../services/api";
 import { Button } from "../Button";
 import { Table } from "../Table";
 import { TableCell } from "../Table/TableCell";
 import { TableRow } from "../Table/TableRow";
 import { TableHeader } from "../TableHeader";
-import styles from "./MyWallet.module.scss";
+import { WalletTableRow } from "./WalletTableRow";
 
 type Options = {
   value: string;
@@ -57,12 +57,12 @@ export const MyWallet = () => {
     });
   };
 
-  const { stocks, addStock } = useContext(TickersContext);
+  const { stocksInWallet, addStockInWallet } = useContext(WalletContext);
 
   const handleAddShare = () => {
     if (!selectedShare.name) return;
-    addStock(selectedShare.name);
 
+    addStockInWallet(selectedShare.name);
     setSelectedShare({} as Share);
     setNewWalletName("");
   };
@@ -76,29 +76,11 @@ export const MyWallet = () => {
       </TableHeader>
 
       <Table>
-        <TableRow rows={6}>
-          <TableCell>(AAPL)</TableCell>
-          <TableCell>
-            <div>Ações</div>
-            <div>12</div>
-          </TableCell>
-          <TableCell>
-            <div>Preço</div>
-            <div>R$ 227.27</div>
-          </TableCell>
-          <TableCell>
-            <div>Data</div>
-            <div>12/12/2020</div>
-          </TableCell>
-          <TableCell>
-            <Button content="Compra" primary />
-          </TableCell>
-          <TableCell>
-            <Button content="Venda" secondary />
-          </TableCell>
-        </TableRow>
+        {stocksInWallet.map((stock) => {
+          return <WalletTableRow key={stock.name} stock={stock} />;
+        })}
         {openNewWalletField && (
-          <TableRow rows={6}>
+          <TableRow rows={4}>
             <TableCell>
               <div style={{ paddingRight: 12 }}>
                 <Select
@@ -115,10 +97,6 @@ export const MyWallet = () => {
               </div>
             </TableCell>
             <TableCell>
-              <div>Ações</div>
-              <div>0</div>
-            </TableCell>
-            <TableCell>
               <div>Preço</div>
               <div>{selectedShare.price}</div>
             </TableCell>
@@ -127,9 +105,6 @@ export const MyWallet = () => {
             </TableCell>
             <TableCell>
               <Button content="Compra" primary onClick={handleAddShare} />
-            </TableCell>
-            <TableCell>
-              <Button content="Venda" secondary />
             </TableCell>
           </TableRow>
         )}

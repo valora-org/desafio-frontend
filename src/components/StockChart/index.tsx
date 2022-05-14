@@ -1,19 +1,15 @@
 import { FC, useContext, useEffect, useMemo, useState } from "react";
 import { Button } from "../Button";
-import { TableHeader } from "../TableHeader";
 import styles from "./StockChart.module.scss";
 import { Input } from "../Input";
-import { api, financialApi } from "../../services/api";
+import { financialApi } from "../../services/api";
 
 import Highcharts, {
   ChartOptions,
-  SeriesOptions,
   SeriesOptionsType,
   TitleOptions,
-  TooltipOptions,
 } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { title } from "process";
 import { TickersContext } from "../../contexts/useTickers";
 
 type HistoricalData = {
